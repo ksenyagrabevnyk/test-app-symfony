@@ -25,42 +25,28 @@ use Symfony\Component\Validator\Mapping\CascadingStrategy;
 class ProductsController extends FOSRestController
 {
     /**
-     *   Authorization user
+     *   Authorization user and get info about products
      * ### REQUEST ###
-     *
-     *     "udid": "string",
-     *     "user_uuid": "string",
-     *     "social_token": "string",
-     *     "social_type":  "string",
-     *     "social_user_id": "string",
-     *     "device_token": "string",
-     *     "time_stamp": "float",
-     *     "cards": [
-     *                 {
-     *                    "card_uuid": "string",
-     *                     "score": "float"
-     *                 }
-     *           ]
      *
      * ### RESPONSE ###
      * ### Status Code 200 and 201 ###
-     *     {
-     *       "user_uuid": "string",
-     *       "cards": [
-     *          {
-     *             "card_uuid": "string",
-     *             "friends_count": "integer",
-     *             "users": [
-     *                 {
-     *                   "user_uuid": "string",
-     *                   "score": "float",
-     *                   "name": "string",
-     *                   "photo_path": "string",
-     *                 }
-     *               ]
-     *            }
-     *         ],
-     *      }
+     *     [
+     *       {
+     *          "products": [
+     *                        {
+     *                          "category_name": [
+     *                                        {
+     *                                          "product_name": "string",
+     *                                          "sale_price": "float",
+     *                                          "purchase_price": "float",
+     *                                          "profit": "float",
+     *                                          "img_path": "string",
+     *                                        }
+     *                                     ],
+     *                         }
+     *                      ],
+     *        }
+     *      ]
      *
      * ### Status Code 400 and 404 ###
      *
@@ -73,7 +59,7 @@ class ProductsController extends FOSRestController
      *
      * @Rest\Post("/auth")
      * @ApiDoc(
-     *  description="Login via facebook or vk or anonymously",
+     *  description="Login users and get info product",
      *  section="User",
      *  resource=true,
      *  requirements={
@@ -84,9 +70,7 @@ class ProductsController extends FOSRestController
      *      }
      *  },
      *  parameters={
-     *      {"name"="udid", "dataType"="string", "required"=false, "description"="User udid"},
-     *      {"name"="social_token", "dataType"="string", "format"="vk token| fb token", "required"=false, "description"="token connection"},
-     *      {"name"="social_type", "dataType"="string", "format"="vk | fb", "required"=false, "description"="Social type"},
+     *      {"name"="products", "dataType"="json", "required"=true, "description"="Products info"},
      *     },
      *
      *  statusCodes={
