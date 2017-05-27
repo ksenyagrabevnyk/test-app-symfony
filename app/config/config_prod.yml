@@ -13,15 +13,15 @@ imports:
 #        result_cache_driver: apc
 #        query_cache_driver: apc
 
-monolog:
-    handlers:
-        main:
-            type:         fingers_crossed
-            action_level: error
-            handler:      nested
-        nesteeroku addons:add cleardbd:
-            type:  stream
-            path:  "php://stderr"
-            level: debug
-        console:
-            type:  console
+#monolog:
+#    handlers:
+#        main:
+#            type:         fingers_crossed
+#            action_level: error
+#            handler:      nested
+#        nesteeroku addons:add cleardbd:
+#            type:  stream
+#            path:  "php://stderr"
+#            level: debug
+#        console:
+#            type:  console
