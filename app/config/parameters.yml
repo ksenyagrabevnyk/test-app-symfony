@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: ec2-46-137-97-169.eu-west-1.compute.amazonaws.com
+    database_port: 5432
+    database_name: d1r27k7p7814s9
+    database_user: caxyuhexhifpbh
+    database_password: 25ad1e6bca77fec67c9f35c3ad1f4017f8ff7e2a89ef35a6ff531e35fbe821df
+    mailer_transport: gmail
+    mailer_host: gmail.com
+    mailer_user: test.for.symfony@gmail.com
+    mailer_password: emailForSymfony
+    secret: ThisTokenIsNotSoSecretChangeIt
