@@ -1,7 +1,7 @@
 # This file is auto-generated during the composer install
 parameters:
     database_host: eu-cdbr-west-01.cleardb.com
-    database_port: 5432
+    database_port: 3306
     database_name: heroku_5510ada1190cf4a
     database_user: b202e3ea68099f
     database_password: f271d676
