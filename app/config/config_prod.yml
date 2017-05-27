@@ -15,13 +15,8 @@ imports:
 
 monolog:
     handlers:
-        main:
-            type:         fingers_crossed
-            action_level: error
-            handler:      nested
-        nesteeroku addons:add cleardbd:
+        nested:
             type:  stream
             path:  "php://stderr"
             level: debug
-        console:
-            type:  console
+
