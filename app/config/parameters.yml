@@ -3,7 +3,7 @@ parameters:
     database_host: app-for-small-business.pp.ua
     database_port: 3306
     database_name: appforsm_app-for-small-business
-    database_user: appforsm
+    database_user: appforsm_symfony
     database_password: eo3x!e6fxfj
     mailer_transport: gmail
     mailer_host: gmail.com
