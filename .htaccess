@@ -1,9 +1,7 @@
-DirectoryIndex /web/app.php
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} -f
-RewriteRule ^(.+) $1 [L]
-RewriteCond %{DOCUMENT_ROOT}/web%{REQUEST_URI} -f
-RewriteRule ^(.+) /web/$1 [L]
+<IfModule mod_rewrite.c>
+    Options -MultiViews
 
-Options +SymLinksIfOwnerMatch
-RewriteRule ^(.*)$ /web/ [QSA,L]
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>
