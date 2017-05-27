@@ -1,0 +1,80 @@
+<?php
+
+namespace {{ namespace }}\Form{{ entity_namespace ? '\\' ~ entity_namespace : '' }};
+
+{% block use_statements %}
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+{% endblock use_statements %}
+
+{% block class_definition %}
+class {{ form_class }} extends AbstractType
+{% endblock class_definition %}
+{
+{% block class_body %}
+    {%- if fields|length > 0 %}
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+        {%- for field, metadata in fields.fieldMappings %}
+            {% if field == 'photoName' %}
+                ->add('photo', HiddenType::class, [
+                    'attr' => [
+                        'class' => 'photo-file',
+                    ],
+                ])
+            {% elseif field == 'image' %}
+                ->add('image', HiddenType::class, [
+                    'attr' => [
+                        'class' => 'photo-file',
+                    ],
+                ])
+            {% elseif field == 'translitName' %}
+                ->add('translitName', 'text', array(
+                'disabled' => 'disabled',
+                ))
+            {% else %}
+                {% if metadata.type == 'date' or metadata.type == 'time' or metadata.type == 'datetime' %}
+                ->add('{{ field }}', '{{ metadata.type }}', array(
+                    'input'  => 'datetime',
+                    'widget' => 'single_text',
+                    'format' => 'MM/dd/yyyy',
+                    'label'  => 'Дата публикации'))
+                {% elseif field != 'id' %}
+                    ->add('{{ field }}')
+                {% endif %}
+            {% endif %}
+        {%- endfor %}
+        {%- for field, metadata in fields.associationMappings %}
+                    ->add('{{ field }}')
+        {%- endfor %}
+
+        ;
+    }
+    {% endif %}
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => '{{ namespace }}\Entity{{ entity_namespace ? '\\' ~ entity_namespace : '' }}\{{ entity_class }}'
+        ));
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return '{{ form_type_name }}';
+    }
+{% endblock class_body %}
+}

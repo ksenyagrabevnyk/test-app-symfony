@@ -1,0 +1,410 @@
+<div class="row">
+    {# --- Execute final calculation block --- #}
+    <div class="col-md-4">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <table class="table issue-tracker" style="margin-bottom: 0;">
+                    <tbody>
+                    <tr>
+                        <td style="border: none;">
+                            <h5>{{ 'Execute final calculations'|trans }}</h5>
+                        </td>
+                        <td style="border: none;" class="text-center"></td>
+                        <td style="border: none;" class="text-right">
+                            <a class="btn btn-danger pull-right parser" href="#"><i class="fa fa-calculator"></i> {{ 'Execute'|trans }}</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {# --- Change Fantasy Data Api key --- #}
+    <div class="col-md-4">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <table class="table issue-tracker" style="margin-bottom: 0;">
+                    <tbody>
+                    <tr>
+                        <td style="border: none;">
+                            <h5>{{ 'Change Fantasy Data api key'|trans }}</h5>
+                        </td>
+                        <td style="border: none;">
+                            <a class="btn btn-success pull-right parser" href="#"><i class="fa fa-key"></i> {{ 'Change'|trans }}</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {# --- Upload new excel file --- #}
+    <div class="col-md-4">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title" style="background-color: #dff0d8;">
+                <table class="table issue-tracker" style="margin-bottom: 0;">
+                    <tbody>
+                    <tr>
+                        <td style="border: none;">
+                            <h5>{{ 'Upload new excel file'|trans }}</h5>
+                        </td>
+                        <td style="border: none;">
+                            <a class="btn btn-file pull-right parser" href="#"><i class="fa fa-upload"></i> {{ 'Upload'|trans }}</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {# --- Fantasy Data Parsers and Players edit page --- #}
+    <div class="col-md-4">
+        {# --- Fantasy Data Parsers --- #}
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <span class="label label-primary pull-right"><i class="fa fa-list"></i></span>
+                <h5>{{ 'Fantasy Data parsers'|trans }}</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="table-responsive">
+                    <table class="table table-hover issue-tracker">
+                        <tbody>
+                            <tr>
+                                {#<td>#}
+                                    {#<span class="label label-primary">{{ "Updated today"|trans }}</span>#}
+                                {#</td>#}
+                                <td class="issue-info">
+                                    {{ 'Teams'|trans }}
+
+                                    {#<small>#}
+                                    {#{{ 'This is issue with the coresponding note'|trans }}#}
+                                    {#</small>#}
+                                </td>
+                                <td class="text-center"></td>
+                                <td class="text-right">
+                                    <a class="btn btn-primary parser" href="#">
+                                        {{ 'Update'|trans }}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                {#<td>#}
+                                {#<span class="label label-primary">{{ "Updated today"|trans }}</span>#}
+                                {#</td>#}
+                                <td class="issue-info">
+                                    {{ 'Players'|trans }}
+
+                                    {#<small>#}
+                                    {#{{ 'This is issue with the coresponding note'|trans }}#}
+                                    {#</small>#}
+                                </td>
+                                <td class="text-center"></td>
+                                <td class="text-right">
+                                    <a class="btn btn-primary parser" href="#">
+                                        {{ 'Update'|trans }}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                {#<td>#}
+                                {#<span class="label label-primary">{{ "Updated today"|trans }}</span>#}
+                                {#</td>#}
+                                <td class="issue-info">
+                                    {{ 'Schedule'|trans }}
+
+                                    {#<small>#}
+                                    {#{{ 'This is issue with the coresponding note'|trans }}#}
+                                    {#</small>#}
+                                </td>
+                                <td class="text-center"></td>
+                                <td class="text-right">
+                                    <a class="btn btn-primary parser" href="#">
+                                        {{ 'Update'|trans }}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                {#<td>#}
+                                {#<span class="label label-primary">{{ "Updated today"|trans }}</span>#}
+                                {#</td>#}
+                                <td class="issue-info">
+                                    {{ 'BattingOrder'|trans }}
+
+                                    {#<small>#}
+                                    {#{{ 'This is issue with the coresponding note'|trans }}#}
+                                    {#</small>#}
+                                </td>
+                                <td class="text-center"></td>
+                                <td class="text-right">
+                                    <a class="btn btn-primary parser" href="#">
+                                        {{ 'Update'|trans }}
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {# --- Players edit page --- #}
+        <div class="ibox float-e-margins">
+            <div class="ibox-title" style="background-color: #dff0d8;">
+                <table class="table issue-tracker" style="margin-bottom: 0;">
+                    <tbody>
+                        <tr>
+                            <td style="border: none;">
+                                <h5>{{ 'Edit players data'|trans }}</h5>
+                            </td>
+                            <td style="border: none;">
+                                <a class="btn btn-success pull-right parser" href="#"><i class="fa fa-male"></i> {{ 'Edit'|trans }}</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="ibox float-e-margins">
+            <div class="ibox-title" style="background-color: #dff0d8;">
+                <table class="table issue-tracker" style="margin-bottom: 0;">
+                    <tbody>
+                    <tr>
+                        <td style="border: none;">
+                            <h5>{{ 'Edit lineups spot coefficient'|trans }}</h5>
+                        </td>
+                        <td style="border: none;">
+                            <a class="btn btn-success pull-right parser" href="#"><i class="fa fa-male"></i> {{ 'Edit'|trans }}</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {# --- Salary parsers --- #}
+    <div class="col-md-4">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <span class="label label-info pull-right"><i class="fa fa-money"></i></span>
+                <h5>{{ 'Salary parsers' }}</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="table-responsive">
+                    <table class="table table-hover issue-tracker">
+                        <tbody>
+                            <tr>
+                                {#<td>#}
+                                {#<span class="label label-primary">{{ "Updated today"|trans }}</span>#}
+                                {#</td>#}
+                                <td class="issue-info">
+                                    {{ 'Fanduel'|trans }}
+
+                                    {#<small>#}
+                                    {#{{ 'This is issue with the coresponding note'|trans }}#}
+                                    {#</small>#}
+                                </td>
+                                <td class="text-center"></td>
+                                <td class="text-right">
+                                    <a class="btn btn-info parser" href="#">
+                                        {{ 'Update'|trans }}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                {#<td>#}
+                                {#<span class="label label-primary">{{ "Updated today"|trans }}</span>#}
+                                {#</td>#}
+                                <td class="issue-info">
+                                    {{ 'Draftkings'|trans }}
+
+                                    {#<small>#}
+                                    {#{{ 'This is issue with the coresponding note'|trans }}#}
+                                    {#</small>#}
+                                </td>
+                                <td class="text-center"></td>
+                                <td class="text-right">
+                                    <a class="btn btn-info parser" href="#">
+                                        {{ 'Update'|trans }}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                            {#<td>#}
+                            {#<span class="label label-primary">{{ "Updated today"|trans }}</span>#}
+                            {#</td>#}
+                            <td class="issue-info">
+                                {{ 'From CSV (temporary)'|trans }}
+
+                                {#<small>#}
+                                {#{{ 'This is issue with the coresponding note'|trans }}#}
+                                {#</small>#}
+                            </td>
+                            <td class="text-center"></td>
+                            <td class="text-right">
+                                <a class="btn btn-info parser" href="#">
+                                    {{ 'Update'|trans }}
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <span class="label label-warning pull-right"></span>
+                <h5>{{ 'Parse FanDuel nad DraftKings Salaries and Execute final calculations by date' }}</h5>
+            </div>
+            <div class="ibox-content">
+                <table class="table issue-tracker" style="margin-bottom: 0;">
+                    <tbody>
+                    <tr>
+                        <form action="#" method="get">
+                        <td style="border: none;">
+                            <input type="text" name="date" class="form-control gns-datepicker" required value="{{ ''|date('Y-m-d') }}">
+                            <input type="hidden" name="data" value="parse_by_date" class="form-control">
+                        </td>
+                        <td style="border: none;" class="text-center"></td>
+                        <td style="border: none;" class="text-right">
+                            <button type="submit" class="btn btn-success pull-right parser">{{ 'Update'|trans }}</button>
+                        </td>
+                        </form>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {# --- Excel data parsers --- #}
+    <div class="col-md-4">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <span class="label label-warning pull-right"><i class="fa fa-file-excel-o"></i></span>
+                <h5>{{ 'Excel data parsers' }}</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="table-responsive">
+                    <table class="table table-hover issue-tracker">
+                        <tbody>
+                        <tr>
+                            {#<td>#}
+                            {#<span class="label label-primary">{{ "Updated today"|trans }}</span>#}
+                            {#</td>#}
+                            <td class="issue-info">
+                                {{ 'General'|trans }}
+
+                                {#<small>#}
+                                {#{{ 'This is issue with the coresponding note'|trans }}#}
+                                {#</small>#}
+                            </td>
+                            <td class="text-center"></td>
+                            <td class="text-right">
+                                <a class="btn btn-warning parser" href="#">
+                                    {{ 'Update'|trans }}
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            {#<td>#}
+                            {#<span class="label label-primary">{{ "Updated today"|trans }}</span>#}
+                            {#</td>#}
+                            <td class="issue-info">
+                                {{ 'HVL and HVR Model Source Tab'|trans }}
+
+                                {#<small>#}
+                                {#{{ 'This is issue with the coresponding note'|trans }}#}
+                                {#</small>#}
+                            </td>
+                            <td class="text-center"></td>
+                            <td class="text-right">
+                                <a class="btn btn-warning parser" href="#">
+                                    {{ 'Update'|trans }}
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            {#<td>#}
+                            {#<span class="label label-primary">{{ "Updated today"|trans }}</span>#}
+                            {#</td>#}
+                            <td class="issue-info">
+                                {{ 'P Model Source Tab'|trans }}
+
+                                {#<small>#}
+                                {#{{ 'This is issue with the coresponding note'|trans }}#}
+                                {#</small>#}
+                            </td>
+                            <td class="text-center"></td>
+                            <td class="text-right">
+                                <a class="btn btn-warning parser" href="#">
+                                    {{ 'Update'|trans }}
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            {#<td>#}
+                            {#<span class="label label-primary">{{ "Updated today"|trans }}</span>#}
+                            {#</td>#}
+                            <td class="issue-info">
+                                {{ 'Bullpen Tab'|trans }}
+
+                                {#<small>#}
+                                {#{{ 'This is issue with the coresponding note'|trans }}#}
+                                {#</small>#}
+                            </td>
+                            <td class="text-center"></td>
+                            <td class="text-right">
+                                <a class="btn btn-warning parser" href="#">
+                                    {{ 'Update'|trans }}
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            {#<td>#}
+                            {#<span class="label label-primary">{{ "Updated today"|trans }}</span>#}
+                            {#</td>#}
+                            <td class="issue-info">
+                                {{ 'OA BP Factors Tab'|trans }}
+
+                                {#<small>#}
+                                {#{{ 'This is issue with the coresponding note'|trans }}#}
+                                {#</small>#}
+                            </td>
+                            <td class="text-center"></td>
+                            <td class="text-right">
+                                <a class="btn btn-warning parser" href="#">
+                                    {{ 'Update'|trans }}
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            {#<td>#}
+                            {#<span class="label label-primary">{{ "Updated today"|trans }}</span>#}
+                            {#</td>#}
+                            <td class="issue-info">
+                                {{ 'Hand BP Factors Tab'|trans }}
+
+                                {#<small>#}
+                                {#{{ 'This is issue with the coresponding note'|trans }}#}
+                                {#</small>#}
+                            </td>
+                            <td class="text-center"></td>
+                            <td class="text-right">
+                                <a class="btn btn-warning parser" href="#">
+                                    {{ 'Update'|trans }}
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

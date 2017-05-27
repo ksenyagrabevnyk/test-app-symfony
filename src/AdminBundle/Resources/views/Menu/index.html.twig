@@ -1,0 +1,306 @@
+{% extends '::base_admin.html.twig' %}
+
+{% block last_stylesheet %}
+<style>
+    .ui-autocomplete {
+        display: none !important;
+    }
+    .dd-item .dd-action {
+        margin-top: 1px;
+    }
+</style>
+{% endblock %}
+
+{% block body -%}
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-xs-4">
+
+            {#Pages#}
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Страницы</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab-pages-favourite"><i class="fa fa-star-o"></i></a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#tab-pages-all"><i class="fa fa-list"></i></a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#tab-pages-search"><i class="fa fa-search"></i></a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab-pages-favourite" class="tab-pane active">
+                                <div class="panel-body">
+                                    <strong>Часто используемые</strong>
+                                    <ul class="todo-list small-list m-t m-b">
+                                        <li>
+                                            <input type="checkbox" class="i-checks" value="" name="" data-id="121" data-text="Контакты">
+                                            <span class="m-l-xs">Контакты</span>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class="i-checks" value="" name="" data-id="122" data-text="Сотрудники" checked>
+                                            <span class="m-l-xs">Сотрудники</span>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class="i-checks" value="" name="" data-id="123" data-text="Участники">
+                                            <span class="m-l-xs">Участники</span>
+                                        </li>
+                                    </ul>
+
+                                    <div class="pull-right">
+                                        <button class="btn btn-w-m btn-primary" type="button"><i class="fa fa-arrow-right"></i>&nbsp;Добавить</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab-pages-all" class="tab-pane">
+                                <div class="panel-body">
+                                    <strong>Все страницы</strong>
+                                    <ul class="todo-list small-list m-t m-b">
+                                        <li>
+                                            <input type="checkbox" class="i-checks" value="" name="" data-id="121" data-text="Контакты">
+                                            <span class="m-l-xs">Контакты</span>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class="i-checks" value="" name="" data-id="122" data-text="Сотрудники" checked>
+                                            <span class="m-l-xs">Сотрудники</span>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class="i-checks" value="" name="" data-id="123" data-text="Участники">
+                                            <span class="m-l-xs">Участники</span>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class="i-checks" value="" name="" data-id="124" data-text="Еще одна">
+                                            <span class="m-l-xs">Еще одна</span>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class="i-checks" value="" name="" data-id="125" data-text="Another one">
+                                            <span class="m-l-xs">Another one</span>
+                                        </li>
+                                    </ul>
+
+                                    <div class="pull-right">
+                                        <button class="btn btn-w-m btn-primary" type="button"><i class="fa fa-arrow-right"></i>&nbsp;Добавить</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab-pages-search" class="tab-pane">
+                                <div class="panel-body">
+                                    <strong>Поиск</strong>
+                                    <div class="search-form">
+                                        <form action="#" method="get">
+                                            <div class="input-group">
+                                                <input type="text" placeholder="Пользователи..." name="menu-item-search" class="form-control">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-primary" type="submit">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <ul class="todo-list small-list m-t m-b"></ul>
+
+                                    <div class="pull-right">
+                                        <button class="btn btn-w-m btn-primary hide" type="button"><i class="fa fa-arrow-right"></i>&nbsp;Добавить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xs-8">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content p-md">
+                    {#tabs#}
+                    <div class="tabs-container menu-creator">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-menu-id-1">Главное меню</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-menu-id-2">Продуктовое меню</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-menu-add"><i class="fa fa-plus"></i></a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab-menu-id-1" class="tab-pane active">
+                                <div class="panel-body">
+                                    <form action="#" method="POST" class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-xs-2 control-label">Название</label>
+                                            <div class="col-xs-10">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="NAME" value="Главное меню">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary"><i class="fa fa-floppy-o"></i></button>
+                                                        <button type="button" class="btn btn-danger"><i class="fa fa-trash-o "></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="dd nestable">
+                                            <ol class="dd-list">
+                                                <li class="dd-item" data-id="1">
+                                                    <a href="#" class="btn btn-danger btn-sm pull-right dd-action" data-action='remove'><i class="fa fa-trash-o "></i></a>
+                                                    <div class="dd-handle">1 - Lorem ipsum</div>
+                                                </li>
+                                                <li class="dd-item" data-id="2">
+                                                    <a href="#" class="btn btn-danger btn-sm pull-right dd-action" data-action='remove'><i class="fa fa-trash-o "></i></a>
+                                                    <div class="dd-handle">2 - Dolor sit</div>
+                                                    <ol class="dd-list">
+                                                        <li class="dd-item" data-id="3">
+                                                            <a href="#" class="btn btn-danger btn-sm pull-right dd-action" data-action='remove'><i class="fa fa-trash-o "></i></a>
+                                                            <div class="dd-handle">3 - Adipiscing elit</div>
+                                                        </li>
+                                                        <li class="dd-item" data-id="4">
+                                                            <a href="#" class="btn btn-danger btn-sm pull-right dd-action" data-action='remove'><i class="fa fa-trash-o "></i></a>
+                                                            <div class="dd-handle">4 - Nonummy nibh</div>
+                                                        </li>
+                                                    </ol>
+                                                </li>
+                                                <li class="dd-item" data-id="5">
+                                                    <a href="#" class="btn btn-danger btn-sm pull-right dd-action" data-action='remove'><i class="fa fa-trash-o "></i></a>
+                                                    <div class="dd-handle">5 - Consectetuer</div>
+                                                    <ol class="dd-list">
+                                                        <li class="dd-item" data-id="6">
+                                                            <a href="#" class="btn btn-danger btn-sm pull-right dd-action" data-action='remove'><i class="fa fa-trash-o "></i></a>
+                                                            <div class="dd-handle">6 - Aliquam erat</div>
+                                                        </li>
+                                                        <li class="dd-item" data-id="7">
+                                                            <a href="#" class="btn btn-danger btn-sm pull-right dd-action" data-action='remove'><i class="fa fa-trash-o "></i></a>
+                                                            <div class="dd-handle">7 - Veniam quis</div>
+                                                        </li>
+                                                    </ol>
+                                                </li>
+                                            </ol>
+                                        </div>
+
+                                        <div class="m-t-md">
+                                            <h5>Serialised Output</h5>
+                                        </div>
+
+                                        <textarea class="form-control" name="CONTENT"></textarea>
+                                    </form>
+                                </div>
+                            </div>
+                            <div id="tab-menu-id-2" class="tab-pane">
+                                <div class="panel-body">
+                                    <form action="#" method="POST" class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-xs-2 control-label">Название</label>
+                                            <div class="col-xs-10">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="NAME" value="Продуктовое меню">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary"><i class="fa fa-floppy-o"></i></button>
+                                                        <button type="button" class="btn btn-danger"><i class="fa fa-trash-o "></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="dd nestable">
+                                            <ol class="dd-list">
+                                                <li class="dd-item" data-id="101">
+                                                    <a href="#" class="btn btn-danger btn-sm pull-right dd-action" data-action='remove'><i class="fa fa-trash-o "></i></a>
+                                                    <div class="dd-handle">101 - Lorem ipsum</div>
+                                                </li>
+                                                <li class="dd-item" data-id="102">
+                                                    <a href="#" class="btn btn-danger btn-sm pull-right dd-action" data-action='remove'><i class="fa fa-trash-o "></i></a>
+                                                    <div class="dd-handle">102 - Dolor sit</div>
+                                                    <ol class="dd-list">
+                                                        <li class="dd-item" data-id="103">
+                                                            <a href="#" class="btn btn-danger btn-sm pull-right dd-action" data-action='remove'><i class="fa fa-trash-o "></i></a>
+                                                            <div class="dd-handle">103 - Adipiscing elit</div>
+                                                        </li>
+                                                        <li class="dd-item" data-id="104">
+                                                            <a href="#" class="btn btn-danger btn-sm pull-right dd-action" data-action='remove'><i class="fa fa-trash-o "></i></a>
+                                                            <div class="dd-handle">104 - Nonummy nibh</div>
+                                                        </li>
+                                                    </ol>
+                                                </li>
+                                                <li class="dd-item" data-id="105">
+                                                    <a href="#" class="btn btn-danger btn-sm pull-right dd-action" data-action='remove'><i class="fa fa-trash-o "></i></a>
+                                                    <div class="dd-handle">105 - Consectetuer</div>
+                                                    <ol class="dd-list">
+                                                        <li class="dd-item" data-id="106">
+                                                            <a href="#" class="btn btn-danger btn-sm pull-right dd-action" data-action='remove'><i class="fa fa-trash-o "></i></a>
+                                                            <div class="dd-handle">106 - Aliquam erat</div>
+                                                        </li>
+                                                        <li class="dd-item" data-id="107">
+                                                            <a href="#" class="btn btn-danger btn-sm pull-right dd-action" data-action='remove'><i class="fa fa-trash-o "></i></a>
+                                                            <div class="dd-handle">107 - Veniam quis</div>
+                                                        </li>
+                                                    </ol>
+                                                </li>
+                                                <li class="dd-item" data-id="108">
+                                                    <a href="#" class="btn btn-danger btn-sm pull-right dd-action" data-action='remove'><i class="fa fa-trash-o "></i></a>
+                                                    <div class="dd-handle">108 - Tation ullamcorper</div>
+                                                </li>
+                                                <li class="dd-item" data-id="109">
+                                                    <a href="#" class="btn btn-danger btn-sm pull-right dd-action" data-action='remove'><i class="fa fa-trash-o "></i></a>
+                                                    <div class="dd-handle">109 - Ea commodo</div>
+                                                </li>
+                                            </ol>
+                                        </div>
+
+                                        <div class="m-t-md">
+                                            <h5>Serialised Output</h5>
+                                        </div>
+
+                                        <textarea class="form-control" name="CONTENT"></textarea>
+                                    </form>
+                                </div>
+                            </div>
+                            <div id="tab-menu-add" class="tab-pane">
+                                <div class="panel-body">
+                                    <p>Форма создания нового меню.</p>
+                                    <form action="#" method="POST" class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-xs-2 control-label">Название</label>
+                                            <div class="col-xs-10 ">
+                                                <div class="input-group">
+                                                    <input type="text" placeholder="Новое меню..." name="NAME" class="form-control">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="dd nestable">
+                                            <ol class="dd-list"></ol>
+                                        </div>
+
+                                        <div class="m-t-md">
+                                            <h5>Serialised Output</h5>
+                                        </div>
+                                        <textarea class="form-control" name="CONTENT"></textarea>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block last_javascript %}
+<script src="{{ asset('includes/admin/inspinia/js/menu_creator.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends '::base_admin.html.twig' %}
+
+{% form_theme edit_form ':Form:editFields.html.twig' %}
+{% form_theme delete_form ':Form:editFields.html.twig' %}
+
+{% block last_stylesheet %}
+<link href='{{ asset('includes/css/plugins/datapicker/datepicker3.css') }}' rel='stylesheet'>
+<link href='{{ asset('includes/css/plugins/daterangepicker/daterangepicker-bs3.css') }}' rel='stylesheet'>
+<link href='{{ asset('includes/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}' rel='stylesheet'>
+{% endblock %}
+
+{% block body -%}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>All form elements <small>With custom checbox and radion elements.</small></h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a>
+                                </li>
+                                <li><a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <br /> <div class="ibox-content">
+
+                        {{ form(edit_form, {attr: {class: "form-horizontal form-label-left input_mask"}}) }}
+                                                
+   {{ form(delete_form) }}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% endblock %}
+
+    {% block last_javascript %}
+    {% for elem in edit_form %}
+    {% if date_active is not defined and 'date' in elem.vars['block_prefixes'] %}
+            {% set date_active = 'true' %}
+            <script src='{{ asset('includes/js/plugins/fullcalendar/moment.min.js') }}'></script>
+            <script type='text/javascript' src='{{ asset('includes/js/plugins/daterangepicker/daterangepicker.js') }}'></script>
+            <script src='{{ asset('js/plugins/datapicker/bootstrap-datepicker.js') }}'></script>
+            <script type='text/javascript'>
+                $(document).ready(function() {
+                    $('.gns-datepicker').daterangepicker({
+                        singleDatePicker: true,
+                        calender_style: 'picker_4',
+                        format: 'DD-MM-YYYY'
+                    })
+                })
+            </script>
+        {% endif %}
+        {% if checkbox_active is not defined and 'checkbox' in elem.vars['block_prefixes'] %}
+            {% set checkbox_active = 'true' %}
+            <link href='{{ asset('includes/css/switchery/switchery.min.css') }}' rel='stylesheet'>
+        {% endif %}
+        {% if file_active is not defined and 'file' in  elem.vars['block_prefixes'] %}
+            {% set file_active = 'true' %}
+            <script src='{{ asset('includes/js/image-delete.js') }}'></script>
+            <script>
+                $(document).ready(function(){
+                    if ('{{ entity.getWebPath() }}' !== '') {
+                        $('.fileList').html('<img src='+'{{ asset(entity.getWebPath()|imagine_filter('my_thumb')) }}'+' style='+'"padding-bottom: 20px"'+' /><a class='btn btn-danger del-im-aj' style='float:right;' data_id='{{ entity.getId }}' data_url='{{ entity.getEntityName }}'>Удалить</a>');
+                    }
+                });
+            </script>
+            <link href='{{ asset('includes/css/upload_button.css') }}' rel='stylesheet'>
+            <script type='text/javascript' src='{{ asset('includes/js/filePreview.js') }}'></script>
+        {% endif %}
+        {% if choice_active is not defined and 'choice' in elem.vars['block_prefixes'] %}
+        {% set choice_active = 'true' %}
+            <script type='text/javascript' src='{{ asset('includes/js/select/select2.full.js') }}'></script>
+            <link href='{{ asset('includes/css/select/select2.min.css') }}' rel='stylesheet'>
+            <script>
+                $(document).ready(function () {
+                    $('.select2_multiple').select2({
+                        allowClear: true,
+                        placeholder: 'Make your choice...'
+                    });
+                });
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

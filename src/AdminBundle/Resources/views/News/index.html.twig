@@ -1,0 +1,181 @@
+{% extends '::base_admin.html.twig' %}
+
+{% block body -%}
+<div class="col-lg-12">
+    <div class="wrapper wrapper-content animated fadeInUp">
+        <div class="ibox">
+            <div class="ibox-title">
+                <div class="ibox-tools pull-right">
+                    <a href="admin/news/new" class="btn btn-primary btn-md"><i class="fa fa-plus"></i>&nbsp;Add</a>
+                </div>
+                <h2>News</h2>
+            </div>
+
+            <div class="ibox-content form-horizontal">
+                <div class="m-b-sm m-t-sm row">
+                    <div class="col-xs-12 col-md-4 ">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <div class="input-group">
+                                    <input type="text" placeholder="Search news..." class="input-sm form-control">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-primary">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="form-group">
+                        <label class="col-xs-4 col-lg-6 control-label">Count</label>
+                        <div class="col-xs-8 col-lg-6"><select class="form-control m-b" name="account">
+                                <option value="option 1">10</option>
+                                <option value="option 2">25</option>
+                                <option value="option 3">50</option>
+                                <option value="option 4">100</option>
+                            </select>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label class="col-xs-4 col-lg-6 control-label">Show</label>
+                            <div class="col-xs-8 col-lg-6"><select class="form-control m-b" name="account">
+                                    <option value="option 1">Active</option>
+                                    <option value="option 1">Disable</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="project-list">
+                            <table class="table table-hover" >
+                                <tbody>
+                                <tr>
+                                    <td class="project-status">
+                                        <span class="label label-primary">Active</span>
+                                    </td>
+                                    <td class="project-title">
+                                        <a ui-sref="project_detail">News title</a>
+                                        <br>
+                                        <small>Created at 12.06.2014 - 5:60 pm</small>
+                                    </td>
+                                    <td class="project-description">
+                                        Lorem ipsum dolor sit amet.
+                                    </td>
+                                    <td class="project-actions">
+                                        <div class="btn-group btn-group-sm pull-right">
+                                            <a class="btn btn-default" href="#">
+                                                <i class="fa fa-power-off"></i>
+                                                Disable
+                                            </a>
+                                            {#<a class="btn btn-default" href="#">#}
+                                            {#<i class="fa fa-check"></i>#}
+                                            {#Activate#}
+                                            {#</a>#}
+                                            <a class="btn btn-default" href="#">
+                                                <i class="fa fa-pencil"></i>
+                                                Edit
+                                            </a>
+                                            <a class="btn btn-default" href="#">
+                                                <i class="fa fa-trash-o"></i>
+                                                Delete
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="project-status">
+                                        <span class="label label-primary">Active</span>
+                                    </td>
+                                    <td class="project-title">
+                                        <a ui-sref="project_detail">News title</a>
+                                        <br>
+                                        <small>Created at 12.06.2014 - 5:60 pm</small>
+                                    </td>
+                                    </td>
+                                    <td class="project-description">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam architecto beatae cumque cupiditate deleniti ducimus eligendi eos impedit inventore laborum modi nobis obcaecati quisquam, quod, sapiente sequi tempora tenetur unde?
+                                    </td>
+                                    <td class="project-actions">
+                                        <div class="btn-group btn-group-sm pull-right">
+                                            <a class="btn btn-default" href="#">
+                                                <i class="fa fa-power-off"></i>
+                                                Disable
+                                            </a>
+                                            {#<a class="btn btn-default" href="#">#}
+                                            {#<i class="fa fa-check"></i>#}
+                                            {#Activate#}
+                                            {#</a>#}
+                                            <a class="btn btn-default" href="#">
+                                                <i class="fa fa-pencil"></i>
+                                                Edit
+                                            </a>
+                                            <a class="btn btn-default" href="#">
+                                                <i class="fa fa-trash-o"></i>
+                                                Delete
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="project-status">
+                                        <span class="label label-default">Disabled</span>
+                                    </td>
+                                    <td class="project-title">
+                                        <a ui-sref="project_detail">News title</a>
+                                        <br>
+                                        <small>Created at 12.06.2014 - 5:60 pm</small>
+                                    </td>
+                                    </td>
+                                    <td class="project-description">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam architecto beatae cumque cupiditate deleniti ducimus eligendi eos impedit inventore laborum modi nobis obcaecati quisquam, quod, sapiente sequi tempora tenetur unde?
+                                    </td>
+                                    <td class="project-actions">
+                                        <div class="btn-group btn-group-sm pull-right">
+                                            {#<a class="btn btn-default" href="#">#}
+                                            {#<i class="fa fa-power-off"></i>#}
+                                            {#Disable#}
+                                            {#</a>#}
+                                            <a class="btn btn-default" href="#">
+                                                <i class="fa fa-check"></i>
+                                                Activate
+                                            </a>
+                                            <a class="btn btn-default" href="#">
+                                                <i class="fa fa-pencil"></i>
+                                                Edit
+                                            </a>
+                                            <a class="btn btn-default" href="#">
+                                                <i class="fa fa-trash-o"></i>
+                                                Delete
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <ul class="pagination pull-right">
+                            <li class="footable-page-arrow disabled"><a href="#first">«</a>
+                            </li><li class="footable-page-arrow disabled"><a  href="#prev">‹</a></li>
+                            <li class="footable-page active"><a  href="#">1</a></li>
+                            <li class="footable-page"><a  href="#">2</a></li>
+                            <li class="footable-page-arrow"><a  href="#next">›</a></li>
+                            <li class="footable-page-arrow"><a href="#last">»</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+

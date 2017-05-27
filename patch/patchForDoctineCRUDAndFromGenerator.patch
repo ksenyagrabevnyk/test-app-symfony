@@ -1,0 +1,32 @@
+--- vendor/sensio/generator-bundle/Sensio/Bundle/GeneratorBundle/Generator/DoctrineCrudGenerator.php	2017-01-04 14:30:48.058442331 +0200
++++ vendor/sensio/generator-bundle/Sensio/Bundle/GeneratorBundle/Generator/DoctrineCrudGenerator.php	2017-01-04 11:29:16.000000000 +0200
+@@ -252,6 +252,7 @@
+             'route_prefix'      => $this->routePrefix,
+             'route_name_prefix' => $this->routeNamePrefix,
+             'actions'           => $this->actions,
++            'fields'            => $this->metadata,
+         ));
+     }
+ 
+@@ -267,7 +268,7 @@
+             'route_name_prefix' => $this->routeNamePrefix,
+             'identifier'        => $this->metadata->identifier[0],
+             'entity'            => $this->entity,
+-            'fields'            => $this->metadata->fieldMappings,
++            'fields'            => $this->metadata,
+             'bundle'            => $this->bundle->getName(),
+             'actions'           => $this->actions,
+         ));
+
+--- vendor/sensio/generator-bundle/Sensio/Bundle/GeneratorBundle/Generator/DoctrineFormGenerator.php	2017-01-04 14:30:52.110397433 +0200
++++ vendor/sensio/generator-bundle/Sensio/Bundle/GeneratorBundle/Generator/DoctrineFormGenerator.php	2017-01-03 18:37:15.000000000 +0200
+@@ -75,7 +75,8 @@
+         array_pop($parts);
+
+         $this->renderFile('form/FormType.php.twig', $this->classPath, array(
+-            'fields'           => $this->getFieldsFromMetadata($metadata),
++//            'fields'           => $this->getFieldsFromMetadata($metadata),
++            'fields'           => $metadata,
+             'namespace'        => $bundle->getNamespace(),
+             'entity_namespace' => implode('\\', $parts),
+             'entity_class'     => $entityClass,

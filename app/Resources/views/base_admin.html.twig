@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ asset('apple-touch-icon.png') }}" />
+    <title>{% block title %}{{ 'admin.homepage.meta.title'|trans }}{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    {% block stylesheets %}
+        <link href="{{ asset('includes/admin/css/font-awesome.min.css') }}" rel="stylesheet">
+
+        <link href="{{ asset('includes/admin/css/animate.css') }}" rel="stylesheet">
+        <link href="{{ asset('includes/admin/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('includes/admin/inspinia/css/style.css') }}" rel="stylesheet">
+        <link href="{{ asset('includes/admin/inspinia/css/jquery-ui.css') }}" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+        <link href="{{ asset('includes/admin/inspinia/css/plugins/summernote/summernote.css') }}" rel="stylesheet">
+        {#<link href="{{ asset('includes/admin/inspinia/css/plugins/summernote/summernote-bs3.css') }}" rel="stylesheet">#}
+        <link href="{{ asset('includes/admin/inspinia/css/plugins/datapicker/datepicker3.css') }}" rel="stylesheet">
+        <link href="{{ asset('includes/admin/inspinia/css/plugins/cropper/cropper.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('includes/admin/inspinia/css/plugins/chosen/chosen.css') }}" rel="stylesheet">
+        <link href="{{ asset('includes/admin/inspinia/css/plugins/iCheck/custom.css') }}" rel="stylesheet">
+        <link href="{{ asset('includes/admin/inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}" rel="stylesheet">
+        <link href="{{ asset('includes/admin/inspinia/css/plugins/blueimp/css/blueimp-gallery.min.css') }}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css">
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css">
+        <link href="{{ asset('includes/admin/inspinia/css/custom-theme.css') }}" rel="stylesheet">
+        {% block last_stylesheet %}{% endblock %}
+    {% endblock %}
+</head>
+<body class="md-skin fixed-sidebar fixed-nav pace-done">
+    <div id="wrapper">
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <img alt="image" class="img-circle" src="{{ asset('includes/admin/img/corn.png') }}">
+                            <span class="clear"></span>
+                            <span class="block m-t-xs">
+                                <strong class="font-bold"> </strong>
+                            </span>
+                            <span class="text-muted text-xs block"> </span>
+                        </div>
+                    </li>
+                    {#<li class="active">#}
+                        {#<a href="#"><i class="fa fa-bullhorn"></i><span class="nav-label">News</span><span class="fa arrow"></span></a>#}
+                        {#<ul class="nav nav-second-level collapse">#}
+                            {#<li><a href="/admin/news/new">Add news</a></li></li>#}
+                            {#<li><a href="/admin/news/">News List</a></li>#}
+                        {#</ul>#}
+                    {#</li>#}
+                    <li class="{% if app.request.attributes.get('_route') == 'category_new' or
+                    app.request.attributes.get('_route') == 'categories' or
+                    app.request.attributes.get('_route') == 'category_edit' %}
+                     active
+                    {% endif %}">
+                        <a href="#"><i class="fa fa-check-square"></i><span class="nav-label">Categories</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li ><a href="/admin/categories/new" class="fa fa-plus-square-o">   Add category</a></li></li>
+                            <li><a href="/admin/categories/" class="fa fa-file-text-o">  Categories List</a></li>
+                        </ul>
+                    <li class="{% if app.request.attributes.get('_route') == 'product_new' or
+                    app.request.attributes.get('_route') == 'products' or
+                    app.request.attributes.get('_route') == 'product_edit' %}
+                     active
+                    {% endif %}">
+                    {#<li class="active">#}
+                        <a href="#"><i class="fa fa-pagelines"></i><span class="nav-label">Products</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="/admin/products/new" class="fa fa-plus-square-o">   Add product</a></li></li>
+                            <li><a href="/admin/products/" class="fa fa-file-text-o">    Products List</a></li>
+                        </ul>
+                    </li>
+
+                    {#<li>#}
+                        {#<a href="#"><i class="fa fa-user"></i><span class="nav-label">Team</span><span class="fa arrow"></span></a>#}
+                        {#<ul class="nav nav-second-level collapse">#}
+                            {#<li><a href="graph_morris.html">Add teammate</a></li></li>#}
+                            {#<li><a href="graph_flot.html">Team List</a></li>#}
+                        {#</ul>#}
+                    {#</li>#}
+                    {#<li>#}
+                        {#<a href="layouts.html"><i class="fa fa-briefcase"></i> <span class="nav-label">Organizations</span></a>#}
+                    {#</li>#}
+                    {#<li>#}
+                        {#<a href="layouts.html"><i class="fa fa-users"></i> <span class="nav-label">Partners</span></a>#}
+                    {#</li>#}
+                </ul>
+
+            </div>
+        </nav>
+        <div id="page-wrapper" class="gray-bg dashboards.dashboard_1">
+            <div>
+                <div class="row border-bottom ng-scope">
+                    <nav class="navbar navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                        <div class="navbar-header">
+                            <h2 class="admin-logo">App for small business</h2>
+                        </div>
+
+                        <div class="container-fluid">
+                            <ul class="nav navbar-top-links navbar-right">
+                                <!--<li>-->
+                                <!--<span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>-->
+                                <!--</li>-->
+                                <li class="dropdown" dropdown="">
+                                    <a class="dropdown-toggle count-info" href="" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="login" href="/home">
+                                        <i class="fa fa-home"></i>
+                                        Home
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="login" href="/logout">
+                                        <i class="fa fa-sign-out"></i>
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </nav>
+                </div>
+                <div class="row wrapper border-bottom white-bg page-heading ng-scope">
+                    <div class="col-lg-10">
+                        <h2>Main page</h2>
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="index.html">Main</a>
+                            </li>
+                            <li>
+                                <a>News</a>
+                            </li>
+                            <li class="active">
+                                <strong>News List</strong>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="row">
+                    {% block body %}{% endblock %}
+                </div>
+                <div class="footer">
+                    <div>
+                        <strong>Copyright</strong> CornWare Web Studio © 2017
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+{% block javascripts %}
+    {% block first_javascript %}{% endblock %}
+    <script src="{{ asset('includes/admin/inspinia/js/jquery-2.1.1.js') }}"></script>
+    <script src="{{ asset('includes/admin/inspinia/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="{{ asset('includes/admin/inspinia/js/bootstrap.js') }}"></script>
+
+    <script src="{{ asset('includes/admin/inspinia/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ asset('includes/admin/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('includes/admin/inspinia/js/plugins/summernote/summernote.min.js') }}"></script>
+    <script src="{{ asset('includes/admin/inspinia/js/plugins/cropper/cropper.min.js') }}"></script>
+    <script src="{{ asset('includes/admin/inspinia/js/plugins/chosen/chosen.jquery.js') }}"></script>
+    <script src="{{ asset('includes/admin/inspinia/js/plugins/iCheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('includes/admin/inspinia/js/plugins/filedrop.js') }}"></script>
+    <script src="{{ asset('includes/admin/inspinia/js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('includes/admin/inspinia/js/plugins/nestable/jquery.nestable.js') }}"></script>
+    <script src="{{ asset('includes/admin/inspinia/js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
+    <script src="{{ asset('includes/admin/inspinia/js/inspinia.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+
+            $('.summernote').summernote({});
+
+            $('.input-group.date').datepicker({
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                autoclose: true
+            });
+            var $image = $(".image-crop > img"),
+                    $previewImage = $("#previewPictureBlock").find("img");
+            $($image).cropper({
+                preview: ".img-preview",
+                restore: true,
+                responsive: true,
+                zoomable: true,
+                zoomOnWheel: false,
+                wheelZoomRatio:  0,
+                done: function(data) {
+                    //этой функцией можно забрать url изображения
+                    //$(".cropped-input").val($image.cropper("getDataURL"));
+                }
+            });
+            $("#download").click(function() {
+                window.open($image.cropper("getDataURL"));
+            });
+
+            $("#zoomIn").click(function() {
+                $image.cropper("zoom", 0.1);
+            });
+
+            $("#zoomOut").click(function() {
+                $image.cropper("zoom", -0.1);
+            });
+
+            $("#rotateLeft").click(function() {
+                $image.cropper("rotate", -45);
+            });
+
+            $("#rotateRight").click(function() {
+                $image.cropper("rotate", 45);
+            });
+            $(".aspect-ratio").click(function(){
+                var aspectRatio = $(this).data("type");
+                $image.cropper("setAspectRatio", parseFloat(aspectRatio));
+            });
+            $("#deletePreview").click(function () {
+                $previewImage.attr("src", "/includes/admin/img/no_image.jpg");
+            });
+            $("#change").click(function () {
+                $previewImage.attr("src",$image.cropper("getDataURL"));
+            });
+            var $inputImage = $("#inputImage");
+            if (window.FileReader) {
+                $inputImage.change(function() {
+                    var fileReader = new FileReader(),
+                            files = this.files,
+                            file;
+
+                    if (!files.length) {
+                        return;
+                    }
+
+                    file = files[0];
+
+                    if (/^image\/\w+$/.test(file.type)) {
+                        fileReader.readAsDataURL(file);
+                        fileReader.onload = function () {
+                            console.log( this.result);
+                            $inputImage.val("");
+                            $image.cropper("reset", true).cropper("replace", this.result);
+                            // set preview image
+                            $previewImage.attr("src", this.result);
+                            $(".photo-hide").show();
+                        };
+                    } else {
+                        showMessage("Please choose an image file.");
+                    }
+                });
+            } else {
+                $inputImage.addClass("hide");
+            }
+            $("#download").click(function() {
+                window.open($image.cropper("getDataURL"));
+            });
+
+            $("#deleteupload").uploadFile({url: "upload.php",
+                dragDrop: true,
+                fileName: "myfile",
+                returnType: "json",
+                showDelete: true,
+                showDownload:true,
+                showPreview:true,
+                previewHeight: "100px",
+                previewWidth: "100px",
+                deleteCallback: function (data, pd) {
+                    for (var i = 0; i < data.length; i++) {
+                        $.post("delete.php", {op: "delete",name: data[i]},
+                                function (resp,textStatus, jqXHR) {
+                                    //Show Message
+                                    alert("File Deleted");
+                                });
+                    }
+                    pd.statusbar.hide(); //You choice.
+
+                },
+                downloadCallback:function(filename,pd)
+                {
+                    location.href="download.php?filename="+filename;
+                }
+            });
+        });
+    </script>
+    {% block last_javascript %}
+    {% endblock %}
+{% endblock %}
+</body>
+</html>

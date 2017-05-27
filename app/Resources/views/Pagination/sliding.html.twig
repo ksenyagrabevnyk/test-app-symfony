@@ -1,0 +1,57 @@
+{# default Sliding pagination control implementation #}
+
+{% if pageCount > 1 %}
+    <ul class="pagination pull-right">
+        {% if first is defined and current != first %}
+            <li class="footable-page-arrow">
+                <a href="{{ path(route, query|merge({(pageParameterName): first})) }}">«</a>
+            </li>
+        {% else %}
+            <li class="footable-page-arrow disabled">
+                <a href="#">«</a>
+            </li>
+        {% endif %}
+
+        {% if previous is defined %}
+            <li class="footable-page-arrow ">
+                <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}">‹</a>
+            </li>
+        {% else %}
+            <li class="footable-page-arrow disabled">
+                <a href="#">‹</a>
+            </li>
+        {% endif %}
+
+        {% for page in pagesInRange %}
+            {% if page != current %}
+                <li class="footable-page">
+                    <a href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                </li>
+            {% else %}
+                <li class="footable-page active">
+                    <a href="#">{{ page }}</a>
+                </li>
+            {% endif %}
+
+        {% endfor %}
+
+        {% if next is defined %}
+            <li class="footable-page-arrow">
+                <a href="{{ path(route, query|merge({(pageParameterName): next})) }}">›</a>
+            </li>
+        {% else %}
+            <li class="footable-page-arrow disabled">
+                <a href="#">›</a>
+            </li>
+        {% endif %}
+
+        {% if last is defined and current != last %}
+            <li class="footable-page-arrow">
+                <a href="{{ path(route, query|merge({(pageParameterName): last})) }}">»</a>
+            </li>
+        {% else %}
+            <li class="footable-page-arrow disabled">
+                <a href="#">»</a>
+        {% endif %}
+    </ul>
+{% endif %}

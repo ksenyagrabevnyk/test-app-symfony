@@ -1,0 +1,154 @@
+{% block extends %}
+    {{ "{% extends '::base_admin.html.twig' %}" }}
+{% endblock extends %}
+
+
+{% block body %}
+    {{ "{% block body -%}" }}
+    <div class="ibox">
+        <div class="ibox-title">
+            <div class="ibox-tools pull-right">
+                {%- for action in record_actions %}
+                    {%- if action == 'new' %}
+                        <a href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "') }}" }}" class="btn btn-primary btn-md"><i class="fa fa-plus"></i>&nbsp;Добавить</a>
+                    {%- endif %}
+                {%- endfor %}
+            </div>
+            <h2>{{ entity }}</h2>
+        </div>
+        <div class="ibox-content form-horizontal">
+            <div class="m-b-sm m-t-sm row">
+                <div class="col-xs-12 col-md-4 ">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <div class="input-group">
+                                <input type="text" id="search-field" placeholder="Поиск ..."
+                                       class="input-sm form-control">
+                                <span class="input-group-btn">
+                <button type="button" class="btn btn-sm btn-primary" id="search-btn">
+                    <i class="fa fa-search"></i>
+                </button>
+              </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-lg-6 control-label">Количество</label>
+                        <div class="col-xs-8 col-lg-6">
+                            <select class="form-control m-b" id="number">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-lg-6 control-label">Фильтр</label>
+                        <div class="col-xs-8 col-lg-6">
+                            <select class="form-control m-b" id="isActive">
+                                <option value="1">Активные</option>
+                                <option value="0">Неактивные</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="project-list">
+                        <table class="table table-hover">
+                            <tbody>
+                            {{ '{% for entity in entities %}' }}
+                                <tr>
+                                    {%- for field, metadata in fields %}
+                                        {%- if field == 'isActive' %}
+                                            {%- if metadata.type == 'boolean' %}
+                                                <td class="project-status">
+                                                <span class="label label-primary">
+                                                    {{ '{% if entity.isActive == "1"  %} Активен {% else %} Не активен {% endif %}' }}
+                                                </span>
+                                                </td>
+                                            {% endif %}
+                                        {% endif %}
+                                    {%- endfor %}
+                                    <td class="project-title">
+                                        {%- for field, metadata in fields %}
+                                            {% if field == 'title' or field == 'name' %}
+                                                <a ui-sref="project_detail">
+                                                    {{ field|capitalize }}
+                                                </a>
+                                            {% endif %}
+                                        {%- endfor %}
+                                        {%- for field, metadata in fields %}
+                                            {% if field == 'date' or field == 'createdAt' or field == 'createDate' %}
+                                                <br>
+                                                <small>{{ "{{ entity."~field ~ "|date('d.m.Y') }}" }}</small>
+                                            {% endif %}
+                                        {%- endfor %}
+                                    </td>
+                                    {%- for field, metadata in fields %}
+                                        {% if field == 'description' or field == 'content' %}
+                                            <td class="project-description">
+                                                {{ '{% if entity.'~ field ~ '|length > 30 %}' }}
+                                                {{ '{{ entity.' ~ field|replace({'_': ''}) ~ '|slice(0,100)~"..." }}' }}
+                                                {{ '{% else %}' }}
+                                                {{ '{{ entity.' ~ field|replace({'_': ''}) ~ '}}' }}
+                                                {{ '{% endif %}' }}
+                                            </td>
+                                        {% endif %}
+                                    {%- endfor %}
+                                    <td class="project-actions">
+                                        <div class="btn-group btn-group-xs">
+                                            {%- for field, metadata in fields %}
+                                                {%- if field == 'isActive' %}
+                                                    {{ '{% if entity.isActive %}' }}
+                                                        <a class="btn btn-white"
+                                                           href="{{ '{{ path("admin_' ~ entity|lower ~ '_deactivate", { "id": entity.'~ identifier ~' }) }}' }}">
+                                                            <i class="fa fa-power-off"></i>
+                                                            Деактивировать
+                                                        </a>
+                                                    {{ '{% else %}' }}
+                                                        <a class="btn btn-default"
+                                                           href="{{ '{{ path("admin_' ~ entity|lower ~ '_activate", { "id": entity.'~ identifier ~' }) }}' }}">
+                                                            <i class="fa fa-check"></i>
+                                                            Активировать
+                                                        </a>
+                                                    {{ '{% endif %}' }}
+                                                {% endif %}
+                                            {% endfor %}
+                                            {%- for action in record_actions %}
+                                                {%- if action == 'edit' %}
+                                                    <a class="btn btn-white" href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': entity."~ identifier ~" }) }}" }}">
+                                                        <i class="fa fa-pencil"></i>
+                                                        Редактировать
+                                                    </a>
+                                                {%- endif %}
+                                            {%- endfor %}
+                                            <a class="btn btn-white delete-item"
+                                               href="{{ '{{path("admin_' ~ entity|lower ~ '_delete", { "id": entity.'~ identifier ~' }) }}' }}"
+                                               data-token="{{ "{{ csrf_token('delete_item') }}" }}">
+                                                <i class="fa fa-trash-o"></i>
+                                                Удалить
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {{ '{% endfor %}' }}
+                            </tbody>
+                        </table>
+                    </div>
+                    {{ '{{ knp_pagination_render(entities) }}' }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ "{% endblock %}" }}
+{% endblock body %}

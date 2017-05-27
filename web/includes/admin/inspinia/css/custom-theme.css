@@ -1,0 +1,418 @@
+.md-skin .navbar-fixed-top, .navbar-static-top {
+    background-color: #292828 !important;
+}
+.md-skin h2.admin-logo {
+    color: white;
+    font-size: 24px;
+    margin-top: 17px;
+    padding-left: 22px;
+}
+.md-skin .navbar-fixed-top {
+    border-bottom: 0px !important;
+}
+.md-skin .nav.navbar-top-links.navbar-right > li > a {
+    color: white;
+}
+.profile-element {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+.profile-element img {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    border-radius: 0px;
+}
+.profile-element span {
+    color: white;
+    position: relative;
+    z-index: 2;
+}
+.profile-element:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.md-skin .nav-header .profile-element span.text-muted {
+    color: white;
+}
+.md-skin .nav-header {
+    background: none;
+    padding: 0px 0px;
+    height: 130px;
+}
+.profile-element span.clear {
+    margin-left: 22px;
+    margin-top: 75px;
+}
+.project-description {
+    width: 50%;
+}
+.note-editor {
+    border: 1px solid #e7eaec;
+}
+.switch {
+    display: inline-block;
+}
+.switch-label {
+    padding-top: 1px;
+    padding-left: 0px;
+    vertical-align: top;
+    margin-right: 10px;
+}
+.main-fields-block {
+    border-top: 1px solid #e5e6e7;
+    padding-top: 18px;
+    float: left;
+    width: 100%;
+}
+.form-group.switchers-group {
+    margin-bottom: 6px;
+}
+.main-fields-block-left {
+    padding-left: 0px;
+}
+.custom-form.form-horizontal .control-label {
+    padding-top: 0px;
+    padding-bottom: 3px;
+    text-align: left;
+}
+.switchers-group {
+    float: left;
+    margin-right: 20px;
+}
+.cropper-block {
+    overflow: hidden;
+}
+.edit-block .panel-body {
+    margin-bottom: 25px;
+}
+.img-preview-sm {
+    margin-bottom: 15px;
+}
+.photo-hide {
+    display: none;
+}
+.ajax-upload-dragdrop {
+    border: 1px dashed #dddddd;
+    width: 100% !important;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 14px;
+
+}
+.ajax-file-upload-statusbar {
+    width: 100% !important;
+    border: 1px dotted #dddddd;
+    margin: 0px;
+    padding: 15px 5px 15px 15px;
+    float: left;
+    margin-bottom: 15px;
+}
+.ajax-file-upload-preview {
+    widoth: 10% !important;
+    height: auto !important;
+    float: left;
+}
+.ajax-file-upload-filename {
+    width: 86%;
+    height: auto;
+    margin: 0px 5px 16px 21px;
+    float: left;
+}
+.ibox-content {
+    float: left;
+    width: 100%;
+}
+.ajax-file-upload-bar {
+    background-color: #1ab394;
+}
+.ajax-file-upload-container {
+    float: left;
+    width: 100%;
+}
+.ajax-file-upload-progress {
+    margin: 5px 10px 5px 22px;
+    position: relative;
+    width: 72%;
+    border: 1px solid #ddd;
+    padding: 1px;
+    border-radius: 3px;
+    display: inline-block;
+    color: #FFFFFF;
+    float: left;
+}
+.ajax-file-upload-error {
+    float: left;
+    margin-left: 23px;
+    margin-top: 10px;
+}
+.ajax-file-upload-green {
+    font-size: 11px;
+    padding: 4px 10px;
+    background-color: #1ab394;
+    float: left;
+}
+.ajax-file-upload-red {
+    font-size: 11px;
+    padding: 4px 10px;
+    background-color: #ed5565;
+    box-shadow: none;
+    float: left;
+}
+.ibox {
+    float: left;
+    width: 100%;
+}
+.ajax-file-upload {
+    box-shadow: none;
+    background-color: #1ab394;
+    border-color: #1ab394;
+    clear: both;
+    cursor: pointer;
+    z-index: 3;
+    margin-right: 0px;
+    font-size: 25px;
+    font-weight: normal;
+    line-height: 24px;
+    height: 37px;
+}
+.ajax-upload-dragdrop span {
+    display: block;
+    font-size: 19px;
+    font-weight: normal;
+}
+.ajax-file-upload:hover {
+    background: #18a689;
+    border-color: #18a689;
+    cursor: pointer !important;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.md-skin .ibox-title, .md-skin .ibox-content {
+    border-style: solid;
+}
+.profile-element {
+    padding-left: 21px;
+}
+#page-wrapper {
+    padding-bottom: 60px;
+}
+.md-skin.mini-navbar .nav-second-level {
+    box-shadow: none;
+}
+body.mini-navbar.fixed-sidebar .nav-header {
+    padding: 0px 0px;
+}
+.edit-buttons {
+    padding-top: 5px;
+}
+.edit-buttons.first {
+    margin-left: 20px;
+}
+.edit-buttons-content {
+    padding-bottom: 7px;
+}
+.back-change {
+    padding-top: 12px;
+}
+.back-change h5 {
+    margin-top: 2px;
+}
+.img-containe img{
+    max-width: 240px;
+}
+
+/*jquery ui*/
+.ui-menu .ui-menu-item {
+    background-color: #fff;
+    padding: 0px;
+}
+.ui-menu .ui-menu-item a {
+    color: #676a6c;
+    padding: 6px 12px;
+    display: block;
+}
+.ui-state-focus, .ui-widget-content .ui-state-focus {
+    background: #1ab394;
+    margin: 0px;
+}
+.ui-autocomplete {
+    max-height: 197px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+}
+
+/*chosen*/
+.chosen-container-active .chosen-choices {
+    border: 1px solid #1ab394;
+}
+.chosen-container .chosen-results li.highlighted {
+    background: #1ab394;
+}
+.chosen-container-multi .chosen-choices li.search-choice {
+    background-color: #e4e4e4;
+    background-image: none;
+}
+
+/*select2*/
+.select2-container--default .select2-selection--multiple {
+    border: 1px solid #e5e6e7;
+    border-radius: 0px;
+    min-height: 34px;
+}
+.selection--multiple {
+    border: 1px solid #e5e6e7;
+    outline: 0;
+}
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border: solid #1ab394 1px;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    color: #333;
+}
+.select2-dropdown {
+    border: 1px solid #ddd;
+}
+.table .project-actions .btn-group,
+.table .table-actions .btn-group {
+    min-width: 205px;
+}
+.table .table-actions {
+    width: 240px;
+    vertical-align: middle;
+}
+.table .table-check,
+.table .mail-date,
+.table .mail-subject,
+.table .mail-ontact {
+    vertical-align: middle;
+}
+.table .mail-date {
+    min-width: 100px;
+}
+.mail-box .table-responsive {
+    padding-bottom: 20px;
+    border: none;
+}
+@media (max-width: 767px) {
+    .tabs-container .nav-tabs > li {
+        float: left !important;
+    }
+    .tabs-container .nav-tabs > li > a {
+        padding: 14px 20px !important;
+    }
+    .tabs-container .nav-tabs > li.active > a {
+        border-bottom: 1px solid #ffffff !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .admin-logo {
+        display: none;
+    }
+    table.table-mail tr td {
+        padding: 6px;
+    }
+    .back-change label {
+        margin-right: 0px !important;
+        clear: both;
+    }
+    .back-change button {
+        margin-bottom: 10px;
+    }
+    .img-containe img {
+        display: inline-block;
+    }
+    .img-containe .control-label {
+        width: 100%;
+    }
+}
+@media (max-width: 991px) {
+    .mail-searchs {
+        margin-bottom: 15px;
+    }
+    .mail-box-header h2.mail-title {
+        float: left;
+        width: 100%;
+        margin-top: 15px;
+    }
+    .count label {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .count div {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .project-list {
+        overflow-x: scroll;
+    }
+    .project-list table {
+        min-width: 1000px;
+    }
+    .save-buttons .btn-w-m {
+        min-width: 87px;
+        margin-left: 5px;
+        float: left !important;
+        margin-bottom: 15px;
+        margin-top: 15px;
+    }
+    .edit-buttons.first {
+        margin-left: 0px;
+    }
+    .edit-buttons {
+        padding-top: 0px;
+        margin-bottom: 15px;
+    }
+    .img-prew-block {
+        margin-left: -30px;
+    }
+    .main-fields-block-left {
+        padding-right: 0px;
+    }
+    .back-change {
+        float: left;
+        width: 100%;
+    }
+    .back-change h5 {
+        float: left;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    .edit-buttons-content .edit-buttons {
+        padding-top: 0px;
+        margin-bottom: 10px;
+        min-width: 91px;
+    }
+    .edit-buttons-content .edit-buttons.first {
+        margin-left: 6px;
+    }
+    .ajax-file-upload-filename {
+        width: 86%;
+        height: auto;
+        margin: 11px 8px 16px 0px;
+        float: left;
+    }
+    .ajax-file-upload-error {
+        margin-left: 0px;
+        margin-top: 0px;
+    }
+    .cropper-container {
+        left: 0px !important;
+    }
+
+}
+
+
+

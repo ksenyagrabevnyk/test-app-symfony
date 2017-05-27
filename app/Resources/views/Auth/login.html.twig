@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login</title>
+
+    <link href="{{ asset('includes/admin/css/font-awesome.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('includes/admin/css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('includes/admin/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('includes/admin/inspinia/css/style.css') }}" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<h1 class="logo-name" style="text-align:center;width: 100%;">SiteName</h1>
+<div class="middle-box text-center loginscreen animated fadeInDown">
+    <h3>Welcome to admin panel</h3>
+    <p>Login in</p>
+    {% if error %}
+        <div class="error" style="color: red">{{ error.message }}</div>
+    {% endif %}
+    {{ form_start(form, {'attr': {'class': 'm-t', 'role': 'form'}}) }}
+        <div class="form-group">
+            {{ form_widget(form._username, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_widget(form._password, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        {{ form_widget(form.login) }}
+    {{ form_end(form) }}
+    </div>
+
+<!-- Mainly scripts -->
+<script src="{{ asset('includes/admin/inspinia/js/jquery-2.1.1.js') }}"></script>
+<script src="{{ asset('includes/admin/inspinia/js/bootstrap.js') }}"></script>
+<script src="{{ asset('includes/admin/inspinia/js/inspinia.js') }}"></script>
+
+</body>
+
+</html>

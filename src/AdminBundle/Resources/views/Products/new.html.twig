@@ -1,0 +1,53 @@
+{% extends '::base_admin.html.twig' %}
+{% block title %}Create category{% endblock %}
+
+{% form_theme form ':Form:fields.html.twig' %}
+
+{% block last_stylesheet %}
+    <link href='{{ asset('includes/admin/inspinia/css/plugins/datapicker/datepicker3.css') }}' rel='stylesheet'>
+    <link href='{{ asset('includes/admin/inspinia/css/plugins/daterangepicker/daterangepicker-bs3.css') }}'
+          rel='stylesheet'>
+    <link href='{{ asset('includes/admin/inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}'
+          rel='stylesheet'>
+    <link href='{{ asset('includes/admin/inspinia/css/plugins/cropper/cropper.min.css') }}'
+{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="row wrapper border-bottom white-bg page-heading ng-scope">
+        <div class="col-lg-10">
+            <h2>{{ 'Categories'|trans }}</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('admin_default_index') }}">{{ 'Home'|trans }}</a>
+                </li>
+                <li class="active">
+                    <strong>{{ 'Create category'|trans }}</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body -%}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        {{ form(form, {attr: {class: "form-horizontal form-label-left input_mask"}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block last_javascript %}
+    {% for elem in form %}
+        {% if checkbox_active is not defined and 'checkbox' in elem.vars['block_prefixes'] %}
+            {% set checkbox_active = 'true' %}
+            <link href='{{ asset('includes/admin/inspinia/css/plugins/switchery/switchery.css') }}'
+                  rel='stylesheet'>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

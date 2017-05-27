@@ -1,0 +1,555 @@
+{% extends '::base_admin.html.twig' %}
+{% block body -%}
+    <div class="col-lg-12 main-body">
+        <div class="wrapper wrapper-content">
+            <form class="row" action="/">
+                <div class="col-xs-12 save-buttons">
+                    <div class="pull-right edit-buttons first"> <button type="button" class="btn btn-w-m btn-primary pull-right btn-sm">Save</button></div>
+                    <div class="pull-right edit-buttons first"><button type="button" class="btn btn-w-m btn-success pull-right btn-sm btn-outline">Cancel</button></div>
+                    <div class="pull-right edit-buttons"><button type="button" class="btn btn-w-m btn-danger pull-right btn-sm">Delete</button></div>
+                </div>
+
+                <div class="col-xs-12 col-md-9 m-t tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true"> Info</a></li>
+                        <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false"> UA</a></li>
+                        <li class=""><a data-toggle="tab" href="#tab-3" aria-expanded="false"> EN</a></li>
+                        <li class=""><a data-toggle="tab" href="#tab-4" aria-expanded="false"> RU</a></li>
+                        <li class=""><a data-toggle="tab" href="#tab-5" aria-expanded="false">Gallery</a></li>
+                    </ul>
+                    <div class="tab-content edit-block">
+                        <div id="tab-1" class="tab-pane active">
+                            <div class="panel-body">
+                                <fieldset class="custom-form form-horizontal">
+                                    <div class="row main-fields-block-left">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group ">
+                                                <div class="col-xs-12">
+                                                    <label class="control-label">Author:</label>
+                                                    <input type="text" class="form-control" placeholder="Your name...">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <label class="control-label">Link:</label>
+                                                    <input type="text" class="form-control" placeholder="Public link...">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row main-fields-block-left">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <label class="control-label">Date Simple</label>
+                                                    <div class="input-group date">
+                                                        <input type="datetime" class="form-control" date-time="" view="date" auto-close="true" min-view="date" format="DD-MM-YYYY">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <label class="control-label">Range select</label>
+                                                    <div class="input-daterange input-group">
+                                                        <input type="text" class="form-control" name="start" value="">
+                                                        <span class="input-group-addon">to</span>
+                                                        <input type="text" class="form-control" name="end" value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <label class="control-label">Select Simple</label>
+                                                    <select class="form-control">
+                                                        <option>option 1</option>
+                                                        <option>option 2</option>
+                                                        <option>option 3</option>
+                                                        <option>option 4</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <label class="control-label">Input Simple</label>
+                                                    <input type="text" class="form-control" placeholder="Input Simple">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <label class="control-label">Input with autocomplete</label>
+                                                    <input type="text" class="form-control ui-autocomplete-remote" data-autocomplete-source="https://api.github.com/search/repositories" placeholder="Input Autocomplete">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <label class="control-label">Multiple select with remote</label>
+                                                    <select multiple data-ajax--url="https://api.github.com/search/repositories" data-ajax--cache="true" class="select2-multiple-remote form-control"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <label class="control-label">Select Multiple Chosen</label>
+                                                    <select class="form-control chosen-select" multiple data-placeholder="Custom placeholder...">
+                                                        <option>option 1</option>
+                                                        <option>option 2</option>
+                                                        <option>option 3</option>
+                                                        <option>option 4</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <label class="control-label">Input File</label>
+                                                    <div class="input-group">
+                                                        <label class="input-group-btn">
+                                                            <span class="btn btn-primary">
+                                                                Browse&hellip; <input type="file" style="display: none;" multiple>
+                                                            </span>
+                                                        </label>
+                                                        <input type="text" class="form-control" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <label class="control-label">Textarea</label>
+                                                    <textarea class="form-control" placeholder="Input Simple"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row main-fields-block-left" id="aasd">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <label class="control-label">Input to clone</label>
+                                                    <input type="text" name="INPUT1" class="form-control" placeholder="" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <label class="control-label">Input to clone</label>
+                                                    <input type="text" name="INPUT2" class="form-control" placeholder="" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <label class="control-label">Textarea</label>
+                                                    <textarea class="form-control" name="INPUT3" placeholder=""></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-title  back-change">
+                                            <h5>Change preview picture</h5>
+                                            <button type="button" class="btn btn-w-m btn-danger pull-right btn-xs" id="deletePreview">Delete</button>
+                                            <label title="Upload image file" for="inputImage" class="btn btn-w-m btn-primary btn-xs pull-right" style="margin-right: 20px;">
+                                                <input type="file" accept="image/*" name="file" id="inputImage" class="hide">
+                                                Upload
+                                            </label>
+
+                                        </div>
+                                        <div class="ibox-content photo-hide">
+                                            <div class="row">
+                                                <div class="col-md-6 cropper-block ">
+                                                    <input type="hidden" name="crop" class="cropped-input">
+                                                    <h4>
+                                                        Uploaded picture
+                                                    </h4>
+
+
+                                                    <div class="image-crop">
+                                                        <img src="" alt="" id="image">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h4>Cropped picture</h4>
+                                                    <div class="img-preview img-preview-sm"></div>
+                                                    <h4>Edit picture</h4>
+                                                    <p>You can change picture or download already cropped.</p>
+                                                    <div class="btn-group">
+                                                        <label title="Donload image" id="change" class="btn btn-success btn-w-m">Crop</label>
+                                                        <label title="Donload image" id="download" class="btn btn-primary btn-w-m">Download</label>
+                                                    </div>
+                                                    <h4>Options</h4>
+                                                    <p>Modify picture</p>
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-white btn-w-m" id="zoomIn" type="button">Zoom In</button>
+                                                        <button class="btn btn-white btn-w-m" id="zoomOut" type="button">Zoom Out</button>
+                                                    </div>
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-white btn-w-m" id="rotateLeft" type="button">Rotate Left</button>
+                                                        <button class="btn btn-white btn-w-m" id="rotateRight" type="button">Rotate Right</button>
+                                                    </div>
+                                                    <p>
+                                                        Proportions
+                                                    </p>
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-white aspect-ratio" data-type="1.7777777777777777" type="button">16:9</button>
+                                                        <button class="btn btn-white aspect-ratio" data-type="4/3" type="button">4:3</button>
+                                                        <button class="btn btn-white aspect-ratio" data-type="1/1" type="button">1:1</button>
+                                                        <button class="btn btn-white aspect-ratio" data-type="2/3" type="button">2:3</button>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-title">
+                                            Gallery pictures
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div id="deleteupload">Upload</div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id="tab-2" class="tab-pane">
+                            <div class="panel-body">
+
+                                <fieldset class="form-horizontal custom-form">
+                                    <div class="form-group"><label class="col-sm-12 control-label">Title:</label>
+                                        <div class="col-sm-12"><input type="text" class="form-control" placeholder="Title"></div>
+                                    </div>
+                                    <div class="form-group"><label class="col-sm-12 control-label">Title:</label>
+                                        <div class="col-sm-12">
+                                        <textarea class="summernote"><p><br></p>
+                                        <p>Testing html </p>
+                                        <p><br> formatting<br></p></textarea>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+
+                            </div>
+                            <div class="ibox float-e-margins form-horizontal custom-form">
+                                <div class="ibox-title">
+                                    <h5>Seo block</h5>
+                                    <div class="ibox-tools">
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-down"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="form-group"><label class="col-sm-12 control-label">Seo Title:</label>
+                                        <div class="col-sm-12"><input type="text" class="form-control" placeholder="Seo Title"></div>
+                                    </div>
+                                    <div class="form-group"><label class="col-sm-12 control-label">Seo Description:</label>
+                                        <div class="col-sm-12"><input type="text" class="form-control" placeholder="Seo Description"></div>
+                                    </div>
+                                    <div class="form-group"><label class="col-sm-12 control-label">Seo Keywords:</label>
+                                        <div class="col-sm-12"><input type="text" class="form-control" placeholder="Seo Keywords"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id="tab-3" class="tab-pane">
+                            <div class="panel-body">
+
+                                <fieldset class="form-horizontal custom-form">
+                                    <div class="form-group"><label class="col-sm-12 control-label">Title:</label>
+                                        <div class="col-sm-12"><input type="text" class="form-control" placeholder="Title"></div>
+                                    </div>
+                                    <div class="form-group"><label class="col-sm-12 control-label">Description:</label>
+                                        <div class="col-sm-12">
+                                            <div class="summernote">
+                                                Lorem ipsum la la la
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+
+                            </div>
+                            <div class="ibox float-e-margins form-horizontal custom-form">
+                                <div class="ibox-title">
+                                    <h5>Seo block</h5>
+                                    <div class="ibox-tools">
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-down"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="form-group"><label class="col-sm-12 control-label">Seo Title EN:</label>
+                                        <div class="col-sm-12"><input type="text" class="form-control" placeholder="Seo Title"></div>
+                                    </div>
+                                    <div class="form-group"><label class="col-sm-12 control-label">Seo Description EN:</label>
+                                        <div class="col-sm-12"><input type="text" class="form-control" placeholder="Seo Description"></div>
+                                    </div>
+                                    <div class="form-group"><label class="col-sm-12 control-label">Seo Keywords EN:</label>
+                                        <div class="col-sm-12"><input type="text" class="form-control" placeholder="Seo Keywords"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id="tab-4" class="tab-pane">
+                            <div class="panel-body">
+
+                                <fieldset class="form-horizontal custom-form">
+                                    <div class="form-group"><label class="col-sm-12 control-label">Title:</label>
+                                        <div class="col-sm-12"><input type="text" class="form-control" placeholder="Title"></div>
+                                    </div>
+                                    <div class="form-group"><label class="col-sm-12 control-label">Description:</label>
+                                        <div class="col-sm-12">
+                                            <div class="summernote">
+                                                Lorem ipsum la la la
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+
+                            </div>
+                            <div class="ibox float-e-margins form-horizontal custom-form">
+                                <div class="ibox-title">
+                                    <h5>Seo block</h5>
+                                    <div class="ibox-tools">
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-down"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="form-group"><label class="col-sm-12 control-label">Seo Title RU:</label>
+                                        <div class="col-sm-12"><input type="text" class="form-control" placeholder="Seo Title"></div>
+                                    </div>
+                                    <div class="form-group"><label class="col-sm-12 control-label">Seo Description RU:</label>
+                                        <div class="col-sm-12"><input type="text" class="form-control" placeholder="Seo Description"></div>
+                                    </div>
+                                    <div class="form-group"><label class="col-sm-12 control-label">Seo Keywords RU:</label>
+                                        <div class="col-sm-12"><input type="text" class="form-control" placeholder="Seo Keywords"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id="tab-5" class="tab-pane">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-12 m-b">
+                                        <h2>Modal gallery</h2>
+                                        <div class="lightBoxGallery">
+                                            <a href="http://webapplayers.com/inspinia_admin-v2.6/img/gallery/1.jpg" title="Image from Unsplash" data-gallery=""><img src="http://webapplayers.com/inspinia_admin-v2.6/img/gallery/1s.jpg"></a>
+                                            <a href="http://webapplayers.com/inspinia_admin-v2.6/img/gallery/2.jpg" title="Image from Unsplash" data-gallery=""><img src="http://webapplayers.com/inspinia_admin-v2.6/img/gallery/2s.jpg"></a>
+                                            <a href="http://webapplayers.com/inspinia_admin-v2.6/img/gallery/3.jpg" title="Image from Unsplash" data-gallery=""><img src="http://webapplayers.com/inspinia_admin-v2.6/img/gallery/3s.jpg"></a>
+                                            <a href="http://webapplayers.com/inspinia_admin-v2.6/img/gallery/4.jpg" title="Image from Unsplash" data-gallery=""><img src="http://webapplayers.com/inspinia_admin-v2.6/img/gallery/4s.jpg"></a>
+                                            <a href="http://webapplayers.com/inspinia_admin-v2.6/img/gallery/5.jpg" title="Image from Unsplash" data-gallery=""><img src="http://webapplayers.com/inspinia_admin-v2.6/img/gallery/5s.jpg"></a>
+                                            <a href="http://webapplayers.com/inspinia_admin-v2.6/img/gallery/6.jpg" title="Image from Unsplash" data-gallery=""><img src="http://webapplayers.com/inspinia_admin-v2.6/img/gallery/6s.jpg"></a>
+                                            <a href="http://webapplayers.com/inspinia_admin-v2.6/img/gallery/7.jpg" title="Image from Unsplash" data-gallery=""><img src="http://webapplayers.com/inspinia_admin-v2.6/img/gallery/7s.jpg"></a>
+                                            <a href="http://webapplayers.com/inspinia_admin-v2.6/img/gallery/8.jpg" title="Image from Unsplash" data-gallery=""><img src="http://webapplayers.com/inspinia_admin-v2.6/img/gallery/8s.jpg"></a>
+
+                                            <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
+                                            <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+                                                <div class="slides"></div>
+                                                <h3 class="title"></h3>
+                                                <a class="prev">‹</a>
+                                                <a class="next">›</a>
+                                                <a class="close">×</a>
+                                                <a class="play-pause"></a>
+                                                <ol class="indicator"></ol>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <h2>Carousel gallery</h2>
+                                        <div class="carousel slide" id="carousel2">
+                                            <ol class="carousel-indicators">
+                                                <li data-slide-to="0" data-target="#carousel2"  class="active"></li>
+                                                <li data-slide-to="1" data-target="#carousel2"></li>
+                                                <li data-slide-to="2" data-target="#carousel2" class=""></li>
+                                            </ol>
+                                            <div class="carousel-inner">
+                                                <div class="item active">
+                                                    <img alt="image"  class="img-responsive" src="http://webapplayers.com/inspinia_admin-v2.5/img/p_big1.jpg">
+                                                    <div class="carousel-caption">
+                                                        <p>This is simple caption 1</p>
+                                                    </div>
+                                                </div>
+                                                <div class="item ">
+                                                    <img alt="image"  class="img-responsive" src="http://webapplayers.com/inspinia_admin-v2.5/img/p_big3.jpg">
+                                                    <div class="carousel-caption">
+                                                        <p>This is simple caption 2</p>
+                                                    </div>
+                                                </div>
+                                                <div class="item">
+                                                    <img alt="image"  class="img-responsive" src="http://webapplayers.com/inspinia_admin-v2.5/img/p_big2.jpg">
+                                                    <div class="carousel-caption">
+                                                        <p>This is simple caption 3</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a data-slide="prev" href="#carousel2" class="left carousel-control">
+                                                <span class="icon-prev"></span>
+                                            </a>
+                                            <a data-slide="next" href="#carousel2" class="right carousel-control">
+                                                <span class="icon-next"></span>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-3 m-t">
+                    {#switchers#}
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Switchers</h5>
+                            <div class="ibox-tools open">
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                <a class="close-link"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="form-group row">
+                                <div class="col-xs-7">
+                                    <label class="switch-label">Published:</label>
+                                </div>
+                                <div class="col-xs-5">
+                                    <div class="switch pull-right">
+                                        <div class="onoffswitch">
+                                            <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="collapsemenu">
+                                            <label class="onoffswitch-label" for="collapsemenu">
+                                                <span class="onoffswitch-inner"></span>
+                                                <span class="onoffswitch-switch"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-xs-7">
+                                    <label class="switch-label">Show on main:</label>
+                                </div>
+                                <div class="col-xs-5">
+                                    <div class="switch pull-right">
+                                        <div class="onoffswitch">
+                                            <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="collapsemenu2">
+                                            <label class="onoffswitch-label" for="collapsemenu2">
+                                                <span class="onoffswitch-inner"></span>
+                                                <span class="onoffswitch-switch"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {#preview picture#}
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Picture</h5>
+                            <div class="ibox-tools open">
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                <a class="close-link"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div id="previewPictureBlock">
+                                <img src="http://webapplayers.com/inspinia_admin-v2.5/img/p_big1.jpg" alt="" class="img-responsive center-block">
+                            </div>
+                        </div>
+                    </div>
+
+                    {#properties#}
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Properties</h5>
+                            <div class="ibox-tools open">
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                <a class="close-link"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="form-group">
+                                <label class="control-label">Date published:</label>
+                                <div class="input-group date">
+                                    <input type="datetime" class="form-control" view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Date end:</label>
+                                <div class="input-group date">
+                                    <input type="datetime" class="form-control" view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Category:</label>
+                                <select class="form-control m-b" name="account">
+                                    <option>Sport</option>
+                                    <option>World</option>
+                                    <option>Economics</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 save-buttons">
+                    <div class="pull-right edit-buttons first"> <button type="button" class="btn btn-w-m btn-primary pull-right btn-sm">Save</button></div>
+                    <div class="pull-right edit-buttons first"><button type="button" class="btn btn-w-m btn-success pull-right btn-sm btn-outline">Cancel</button></div>
+                    <div class="pull-right edit-buttons"><button type="button" class="btn btn-w-m btn-danger pull-right btn-sm">Delete</button></div>
+                </div>
+            </form>
+
+    </div>
+{% endblock %}
+
+{% block last_javascript %}
+<script src="{{ asset('includes/admin/inspinia/js/jquery.dublicator.js') }}"></script>
+<script>
+$('#aasd').dublicator();
+</script>
+{% endblock %}

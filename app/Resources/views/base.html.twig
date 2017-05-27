@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ asset('apple-touch-icon.png') }}" />
+    <title>{% block title %}{{ 'homepage.meta.title'|trans }}{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    {% block stylesheets %}
+        <link href="{{ asset('includes/css/style.min.css') }}" rel="stylesheet">
+
+        {% block last_stylesheet %}{% endblock %}
+    {% endblock %}
+</head>
+
+<body {% block bodyClass %}{% endblock %}">
+    <div id="wrapper" class="top-navigation">
+        {% block header %}{% include 'mainBlocks/header.html.twig' %}{% endblock %}
+        <div id="page-wrapper" class="gray-bg">
+            {% block body %}{% endblock %}
+            {% block pageFooter %}{% include 'mainBlocks/footer.html.twig' %}{% endblock %}
+        </div>
+    </div>
+
+    {% block confirmDelete %}{% include 'mainBlocks/confirmDelete.html.twig' %}{% endblock %}
+
+    {% block javascripts %}
+        {% block first_javascript %}{% endblock %}
+        <script src="{{ asset('includes/js/scripts.min.js') }}"></script>
+
+        {% block last_javascript %}{% endblock %}
+    {% endblock %}
+</body>
+</html>

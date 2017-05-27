@@ -1,0 +1,20 @@
+<!-- Delete confirmation dialog -->
+<div class="modal fade" id="delete-dialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-warning"></i> {{ 'Please confirm your action'|trans }}</h4>
+            </div>
+            <div class="modal-body">
+                <h4>{{ 'Are you sure you wish to delete %object%?'|trans({ '%object%': '<span id="delete-target-label" data-delete-target-label-default="' ~ ('that item'|trans) ~ '">that item</span>' })|raw }}</h4>
+                <br>
+                <div class="alert alert-danger">{{ 'Please review your decision carefully, as this action cannot be undone.'|trans }}</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-eraser"></i> {{ 'No, cancel.'|trans }}</button>
+                <button type="button" id="delete-target-submit" class="pull-left btn btn-danger"><i class="fa fa-trash-o"></i> {{ 'Yes, delete it.'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>

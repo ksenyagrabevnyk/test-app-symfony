@@ -1,0 +1,35 @@
+
+
+/** Styling input[type=file] **/
+.btn-file { position: relative; overflow: hidden; margin-right: 4px; }
+.btn-file input { position: absolute; top: 0; right: 0; margin: 0; opacity: 0; filter: alpha(opacity=0);
+    transform: translate(-300px, 0) scale(4); font-size: 23px; direction: ltr; cursor: pointer; }
+/* Fix for IE 7: */
+* + html .btn-file { padding: 2px 15px; margin: 1px 0 0 0; }
+[class^="icon-"], [class*=" icon-"] {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-top: 1px;
+    line-height: 14px;
+    vertical-align: text-top;
+    background-image: url("../fonts/glyphicons-halflings.png");
+    background-position: 14px 14px;
+    background-repeat: no-repeat;
+}
+.icon-plus {
+    background-position: -408px -96px;
+}
+.icon-file {
+    background-position: -24px -24px;
+}
+div.image_thummb_document{
+    width:100px;
+    height:100px;
+    overflow:hidden;
+    margin:10px;
+    margin-left:0;
+    background-image: url("../image/document.png");
+    background-position: center;
+    background-repeat: no-repeat;
+}

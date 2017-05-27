@@ -1,0 +1,282 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block body %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="col-xs-6 col-md-3">
+            <a href="">
+                <div class="widget navy-bg p-lg text-center">
+                    <div class="m-b-md">
+                        <i class="fa fa-check-square fa-4x"></i>
+                        <h1 class="m-xs">12</h1>
+                        <h3 class="font-bold no-margins">Categories</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <a href="">
+                <div class="widget navy-bg p-lg text-center">
+                    <div class="m-b-md">
+                        <i class="fa fa-pagelines fa-4x"></i>
+                        <h1 class="m-xs">56</h1>
+                        <h3 class="font-bold no-margins">Products</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {#<div class="col-xs-6 col-md-3">#}
+            {#<a href="">#}
+                {#<div class="widget navy-bg p-lg text-center">#}
+                    {#<div class="m-b-md">#}
+                        {#<i class="fa fa-briefcase fa-4x"></i>#}
+                        {#<h1 class="m-xs">47</h1>#}
+                        {#<h3 class="font-bold no-margins">Organizations</h3>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</a>#}
+        {#</div>#}
+        {#<div class="col-xs-6 col-md-3">#}
+            {#<a href="">#}
+                {#<div class="widget navy-bg p-lg text-center">#}
+                    {#<div class="m-b-md">#}
+                        {#<i class="fa fa-users fa-4x"></i>#}
+                        {#<h1 class="m-xs">47</h1>#}
+                        {#<h3 class="font-bold no-margins">Partners</h3>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</a>#}
+        {#</div>#}
+
+        <div class="col-xs-12" style="margin-top: 28px;">
+            <div class="mail-box-header">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <h2 class="mail-title">
+                            Inbox Messages (16)
+                        </h2>
+                    </div>
+                    <div class="col-xs-12 col-sm-3 pull-right mail-searchs">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" name="search" placeholder="Search email...">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-3 pull-right">
+                        <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;Delete checked</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mail-box">
+                <div class="table-responsive">
+                    <table class="table table-hover table-mail">
+                    <tbody>
+                    <tr class="read">
+                        <td class="check-mail table-check">
+                            <input type="checkbox" class="i-checks" id="singleCheckbox1" value="option1" aria-label="Single checkbox One">
+                        </td>
+                        <td class="mail-ontact">Anna Smith<br>Phone: +432 955 908<br>Email: test@test.com</td>
+                        <td class="mail-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
+                        <td class="text-right mail-date">6.10 AM</td>
+                        <td class="table-actions">
+                            <div class="btn-group btn-group-sm pull-right">
+                                <a class="btn btn-default" href="#">
+                                    <i class="fa fa-power-off"></i>
+                                    Disable
+                                </a>
+                                {#<a class="btn btn-default" href="#">#}
+                                {#<i class="fa fa-check"></i>#}
+                                {#Activate#}
+                                {#</a>#}
+                                <a class="btn btn-default" href="#">
+                                    <i class="fa fa-pencil"></i>
+                                    Edit
+                                </a>
+                                <a class="btn btn-default" href="#">
+                                    <i class="fa fa-trash-o"></i>
+                                    Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="read">
+                        <td class="check-mail table-check">
+                            <input type="checkbox" class="i-checks" id="singleCheckbox2" value="option1" aria-label="Single checkbox One">
+                        </td>
+                        <td class="mail-ontact">Monica Smith<br>Phone: +432 955 908<br>Email: test@test.com</td>
+                        <td class="mail-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
+                        <td class="text-right mail-date">6.10 AM</td>
+                        <td class="table-actions">
+                            <div class="btn-group btn-group-sm pull-right">
+                                <a class="btn btn-default" href="#">
+                                    <i class="fa fa-power-off"></i>
+                                    Disable
+                                </a>
+                                {#<a class="btn btn-default" href="#">#}
+                                {#<i class="fa fa-check"></i>#}
+                                {#Activate#}
+                                {#</a>#}
+                                <a class="btn btn-default" href="#">
+                                    <i class="fa fa-pencil"></i>
+                                    Edit
+                                </a>
+                                <a class="btn btn-default" href="#">
+                                    <i class="fa fa-trash-o"></i>
+                                    Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="read">
+                        <td class="check-mail table-check">
+                            <input type="checkbox" class="i-checks" id="singleCheckbox3" value="option1" aria-label="Single checkbox One">
+                        </td>
+                        <td class="mail-ontact">Mark Johnson<br>Phone: +432 955 908<br>Email: test@test.com</td>
+                        <td class="mail-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
+                        <td class="text-right mail-date">6.10 AM</td>
+                        <td class="table-actions">
+                            <div class="btn-group btn-group-sm pull-right">
+                                {#<a class="btn btn-default" href="#">#}
+                                    {#<i class="fa fa-power-off"></i>#}
+                                    {#Deactivate#}
+                                {#</a>#}
+                                <a class="btn btn-default" href="#">
+                                    <i class="fa fa-check"></i>
+                                    Activate
+                                </a>
+                                <a class="btn btn-default" href="#">
+                                    <i class="fa fa-pencil"></i>
+                                    Edit
+                                </a>
+                                <a class="btn btn-default" href="#">
+                                    <i class="fa fa-trash-o"></i>
+                                    Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-lg-4">
+            <div class="ibox float-e-margins form-horizontal custom-form">
+                <div class="ibox-title">
+                    <h5>Contact Info</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-down"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group"><label class="col-sm-12 control-label">Address</label>
+                        <div class="col-sm-12"><input type="text" class="form-control" placeholder="Main str. 1"></div>
+                    </div>
+                    <div class="form-group"><label class="col-sm-12 control-label">Phone</label>
+                        <div class="col-sm-12"><input type="text" class="form-control" placeholder="+432 955 908"></div>
+                    </div>
+                    <div class="form-group"><label class="col-sm-12 control-label">Fax</label>
+                        <div class="col-sm-12"><input type="text" class="form-control" placeholder="+432 955 908"></div>
+                    </div>
+                    <div class="form-group"><label class="col-sm-12 control-label">Сopyright</label>
+                        <div class="col-sm-12"><input type="text" class="form-control" placeholder="&copy; site name "></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-lg-4">
+            <div class="ibox float-e-margins form-horizontal custom-form">
+                <div class="ibox-title">
+                    <h5>Forms on site</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-down"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <label class="control-label col-xs-9">Feedback:</label>
+                        <div class="col-xs-3">
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="collapsemenu1">
+                                <label class="onoffswitch-label" for="collapsemenu1">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-9">Subscribe:</label>
+                        <div class="col-xs-3">
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="collapsemenu2" checked>
+                                <label class="onoffswitch-label" for="collapsemenu2">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-9">Franchise:</label>
+                        <div class="col-xs-3">
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="collapsemenu3">
+                                <label class="onoffswitch-label" for="collapsemenu3">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-xs-12 col-lg-4">
+            <div class="mail-box ibox float-e-margins form-horizontal custom-form">
+                <div class="ibox-title">
+                    <h5>Subscribed</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-down"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                <table class="table table-hover table-mail">
+                    <tbody>
+                    <tr class="read">
+                        <td class="">Anna Smith<br></td>
+                        <td class="text-right mail-date">6.10 AM</td>
+                    </tr>
+                    <tr class="read">
+                        <td class="">Monica Smith</td>
+                        <td class="text-right mail-date">8.22 PM</td>
+                    </tr>
+                    <tr class="read">
+                        <td class="">Mark Johnson</td>
+                        <td class="text-right mail-date">23.01 PM</td>
+                    </tr>
+                    </tbody>
+                </table>
+                    </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+

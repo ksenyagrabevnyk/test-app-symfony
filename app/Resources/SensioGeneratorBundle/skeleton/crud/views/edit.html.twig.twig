@@ -1,0 +1,228 @@
+{% block extends %}
+    {{ "{% extends '::base_admin.html.twig' %}" }}
+{% endblock extends %}
+
+{% block body %}
+    {{ "{% block body -%}" }}
+    {{ '{{ form_start(edit_form) }}' }}
+    <div class="row">
+        <div class="col-xs-12 text-right">
+            <button type="submit" id="#" name="#" class="btn btn-w-m btn-primary btn-sm">Создать</button>
+            <a href="{{ '{{ path("' ~ route_name_prefix ~ '") }}' }}" class="btn btn-w-m btn-success btn-sm btn-outline">Отмена</a>
+            <a class="btn btn-w-m btn-danger btn-sm btn-outline delete-item"
+               href="{{ '{{path("admin_' ~ entity|lower ~ '_delete", { "id": entity.'~ identifier ~' }) }}' }}"
+               data-token="{{ "{{ csrf_token('delete_item') }}" }}">
+                Удалить
+            </a>
+        </div>
+    </div>
+    <div class="row m-t">
+        <div class="col-xs-12 col-md-9">
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab-1" data-toggle="tab">Базовые поля</a></li>
+                    {%- for field, metadata in fields.fieldMappings %}
+                        {% if field == 'gallery' %}
+                            <li class=""><a href="#tab-2" data-toggle="tab">Дополнительные поля</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active form" id="tab-1">
+                        <div class="panel-body">
+                            <fieldset class="form">
+                                {%- for field, metadata in fields.fieldMappings %}
+                                    {% if field != 'seoTitle' and
+                                    field != 'seoDescription' and
+                                    field != 'seoKeywords' and
+                                    field != 'photo' and
+                                    field != 'image' %}
+                                        {% if metadata.type == 'string' and field != 'file' %}
+                                            <div class="form-group">
+                                                {{ '{{ form_label(edit_form.' ~ field ~ ', null, {"label_attr": {"class": "control-label"}}) }}' }}
+                                                {{ '{{ form_widget(edit_form.' ~ field ~ ', {attr: {class: "form-control"}}) }}' }}
+                                            </div>
+                                        {% elseif metadata.type == 'text' %}
+                                            <div class="form-group">
+                                                {{ '{{ form_label(edit_form.' ~ field ~ ', null, {"label_attr": {"class": "control-label"}}) }}' }}
+                                                {{ '{{ form_widget(edit_form.' ~ field ~ ', {attr: {class: "form-control", cols: "30", rows: "5"}}) }}' }}
+                                            </div>
+                                        {% elseif metadata.type == 'string' and field == 'file' %}
+                                            <div class="form-group">
+                                                <label class="control-label">Файл</label>
+                                                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                                    <div class="form-control" data-trigger="fileinput">
+                                                        <i class="glyphicon glyphicon-file fileinput-exists"></i>
+                                                        <span class="fileinput-filename"></span>
+                                                    </div>
+                                                    <span class="input-group-addon btn btn-primary btn-file">
+                                                    <span class="fileinput-new">Выберите файл</span>
+                                                    <span class="fileinput-exists">Изменить</span>
+                                                    <input type="file" name="..."/>
+                                                  </span>
+                                                    <a href="#" class="input-group-addon btn btn-primary fileinput-exists" data-dismiss="fileinput">Удалить</a>
+                                                </div>
+                                            </div>
+                                        {% elseif field != 'id' and
+                                        metadata.type != 'date' and
+                                        metadata.type != 'datetime' and
+                                        metadata.type != 'time' %}
+                                            <div class="form-group">
+                                                {{ '{{ form_label(edit_form.' ~ field ~ ', null, {"label_attr": {"class": "control-label"}}) }}' }}
+                                                {{ '{{ form_widget(edit_form.' ~ field ~ ', {attr: {class: "form-control"}}) }}' }}
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                {%- for field, metadata in fields.associationMappings %}
+                                    <div class="form-group">
+                                        {{ '{{ form_label(edit_form.' ~ field ~ ', null, {"label_attr": {"class": "control-label"}}) }}' }}
+                                        {{ '{{ form_widget(edit_form.' ~ field ~ ', {attr: {class: "form-control chosen-select"}}) }}' }}
+                                    </div>
+                                {% endfor %}
+                            </fieldset>
+                            {% set i = 0 %}
+                            {%- for field, metadata in fields.fieldMappings %}
+                                {% if field == 'seoTitle' or field == 'seoDescription' or field == 'seoKeywords' %}
+                                    {% if i == 0 %}
+                                        <hr class="hr-line-dashed">
+                                    {% endif %}
+                                    <div class="form-group">
+                                        {{ '{{ form_label(edit_form.' ~ field ~ ', null, {"label_attr": {"class": "control-label"}}) }}' }}
+                                        {{ '{{ form_widget(edit_form.' ~ field ~ ', {attr: {class: "form-control"}}) }}' }}
+                                    </div>
+                                    {% set i = i + 1 %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {%- for field, metadata in fields.fieldMappings %}
+                        {% if field == 'gallery' %}
+                            <div class="tab-pane form" id="tab-2">
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label class="control-label">Мультизагрузка файлов: (Ссылка на документацию: <a href="http://www.dropzonejs.com/#configuration-options">http://www.dropzonejs.com/#configuration-options</a>)</label>
+                                        <div id="dZUpload" class="dropzone" data-href="/api/gallery/upload/{{ entity }}{{ '{{ entity.id }}' }}"></div>
+                                    </div>
+                                    {#<div class="form-group">#}
+                                    {#<label class="control-label">Summernote:</label>#}
+                                    {#<div id="summernote">Custom text</div>#}
+                                    {#</div>#}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Настройки</h5>
+                    <div class="ibox-tools open">
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        <a class="close-link"><i class="fa fa-times"></i></a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group row">
+                        {%- for field, metadata in fields.fieldMappings %}
+                            {% if metadata.type == 'boolean' %}
+                                <div class="col-xs-7">
+                                    {{ '{{ form_label(edit_form.' ~ field ~ ', null, {"label_attr": {"class": "switch-label"}}) }}' }}
+                                </div>
+                                <div class="col-xs-5">
+                                    <div class="switch pull-right">
+                                        <div class="onoffswitch">
+                                            {{ '{{ form_widget(edit_form.' ~ field ~ ', {attr: {class: "onoffswitch-checkbox"}}) }}' }}
+                                            <label class="onoffswitch-label" for="{{ bundle|lower ~ '_' ~ entity|lower ~ '_' ~ field }}">
+                                                <span class="onoffswitch-inner"></span>
+                                                <span class="onoffswitch-switch"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {%- for field, metadata in fields.fieldMappings %}
+                        {% if metadata.type == 'date' or metadata.type == 'datetime' %}
+                            {% if loop.first %}
+                                <hr class="hr-line-dashed">
+                            {% endif %}
+                            <div class="form-group row" id="data_1">
+                                <div class="col-xs-12">
+                                    {{ '{{ form_label(edit_form.' ~ field ~ ') }}' }}
+                                    <div class="input-group date">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        {{ '{{ form_widget(edit_form.' ~ field ~ ', {attr: {class: "form-control"}}) }}' }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% elseif metadata.type == 'time' %}
+                            <div class="form-group row" id="data_1">
+                                <div class="col-xs-12">
+                                    {{ '{{ form_label(edit_form.' ~ field ~ ') }}' }}
+                                    <div class="input-group clockpicker">
+                                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                        {{ '{{ form_widget(edit_form.' ~ field ~ ', {attr: {class: "form-control"}}) }}' }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            {%- for field, metadata in fields.fieldMappings %}
+                {% if field == 'image' or field == 'photoName' or field == 'photo' %}
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Изображение</h5>
+                            <div class="ibox-tools open">
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                <a class="close-link"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div id="previewPictureBlock" class="text-center previewPictureBlock">
+                                <img src="{{ "{{ asset('includes/img/no_photo.jpg') }}" }}" alt="" class="img-responsive center-block">
+                                <div class="btn-group m-t">
+                                    <label title="Upload image file" for="inputImage" class="btn btn-primary btn-outline">
+                                        <input type="file" accept="image/*" name="file" id="inputImage" class="hide">
+                                        Загрузить
+                                    </label>
+                                    <label title="Donload image" id="deletePreview" class="btn btn-danger btn-outline">Удалить</label>
+                                </div>
+                            </div>
+                            <div id="previewCroppBlock" class="previewCroppBlock text-center">
+                                <img src="{{ "{{ asset('includes/img/no_photo.jpg') }}" }}" alt="" class="img-responsive center-block">
+                                <div class="btn-group m-t">
+                                    <label id="cropp" class="btn btn-primary btn-outline">Обрезать</label>
+                                    <label id="cancelCropp" class="btn btn-success btn-outline">Отменить</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row m-t m-b-lg">
+        <div class="col-xs-12 text-right">
+            {{ '{{ form_widget(edit_form.submit, {attr: {class: "btn btn-w-m btn-primary btn-sm", }}) }}' }}
+            <a href="{{ '{{ path("' ~ route_name_prefix ~ '") }}' }}" class="btn btn-w-m btn-success btn-sm btn-outline">Отмена</a>
+            <a class="btn btn-w-m btn-danger btn-sm btn-outline delete-item"
+               href="{{ '{{path("admin_' ~ entity|lower ~ '_delete", { "id": entity.'~ identifier ~' }) }}' }}"
+               data-token="{{ "{{ csrf_token('delete_item') }}" }}">
+                Удалить
+            </a>
+        </div>
+    </div>
+    {{ '{{ form_end(edit_form) }}' }}
+
+    {#{% set hide_edit, hide_delete = true, true %}#}
+    {#{% include 'crud/views/others/record_actions.html.twig.twig' %}#}
+    {{ "{% endblock %}" }}
+{% endblock body %}

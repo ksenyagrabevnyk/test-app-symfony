@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ status_text }}{% endblock %}
+
+{% block body %}
+    <div class="background-notfound"></div>
+    <div class="container container-notfound">
+        <h2 class="head text-right block head-notfound">
+            {{ status_code }} {{ status_text }}
+        </h2>
+
+        <div class="block-content text-left" >
+            <h3>Страницы не найдена</h3>
+            <p>Возможно эта страница была удалена, либо к ней неуказан верный путь</p>
+            <p class="block">
+                Попробуйте воспользоваться <a href="#">поиском</a> или посетите <a href={{ path('main_tour') }}>главную страницу</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
