@@ -3,7 +3,7 @@
 namespace AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use AdminBundle\Helper\GenerationUUIDHelper;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -11,7 +11,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Users
  *
  * @ORM\Table(name="users")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AdminBundle\EntityRepository\UsersRepository")
+ * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(fields="email", message="Email already taken")
  * @UniqueEntity(fields="username", message="Username already taken")
  */
@@ -21,7 +22,7 @@ class Users implements UserInterface, \Serializable
     public function __construct()
     {
         $this->setSalt(md5(time()));
-        $this->created = new \DateTime('now');
+        $this->uuid = GenerationUUIDHelper::uuid();
     }
 
     /**
@@ -104,9 +105,9 @@ class Users implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="confirmation_token", type="string", length=255, nullable=true)
+     * @ORM\Column(name="device_token", type="string", length=32, nullable=true)
      */
-    private $confirmationToken;
+    private $deviceToken;
 
     /**
      * @var \DateTime
@@ -124,6 +125,13 @@ class Users implements UserInterface, \Serializable
      * })
      */
     private $role;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="uuid", type="string", length=32)
+     */
+    private $uuid;
 
     /**
      * @var integer
@@ -303,10 +311,7 @@ class Users implements UserInterface, \Serializable
      */
     public function setPassword($password)
     {
-        $this->password = password_hash($password, PASSWORD_BCRYPT, array(
-            'salt' => $this->salt,
-            'cost' => 13,
-        ));
+        $this->password = $password;
 
         return $this;
     }
@@ -391,26 +396,26 @@ class Users implements UserInterface, \Serializable
     }
 
     /**
-     * Set confirmationToken
+     * Set deviceToken
      *
-     * @param string $confirmationToken
+     * @param string $deviceToken
      * @return Users
      */
-    public function setConfirmationToken($confirmationToken)
+    public function setDeviceToken($deviceToken)
     {
-        $this->confirmationToken = $confirmationToken;
+        $this->deviceToken = $deviceToken;
 
         return $this;
     }
 
     /**
-     * Get confirmationToken
+     * Get deviceToken
      *
      * @return string
      */
-    public function getConfirmationToken()
+    public function getDeviceToken()
     {
-        return $this->confirmationToken;
+        return $this->deviceToken;
     }
 
     /**
@@ -462,11 +467,34 @@ class Users implements UserInterface, \Serializable
     /**
      * Get roles
      *
-     * @return \AdminBundle\Entity\Roles
+     * @return array
      */
     public function getRoles()
     {
         return array($this->role->getName());
+    }
+
+    /**
+     * Set uuid
+     *
+     * @param string $uuid
+     * @return Users
+     */
+    public function setUuid($uuid)
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    /**
+     * Get uuid
+     *
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
     }
 
     /**
@@ -488,7 +516,7 @@ class Users implements UserInterface, \Serializable
     }
 
     /**
-     * Serializes the content of the current User object
+     * Serializes the content of the current Users object
      * @return string
      */
     public function serialize()
@@ -499,13 +527,13 @@ class Users implements UserInterface, \Serializable
     }
 
     /**
-     * Unserializes the given string in the current User object
+     * Unserializes the given string in the current Users object
      * @param serialized
      */
     public function unserialize($serialized)
     {
         list($this->username, $this->password, $this->salt,
-            $this->userRoles, $this->id) = \json_decode(
+            $this->role, $this->id) = \json_decode(
             $serialized);
     }
 }

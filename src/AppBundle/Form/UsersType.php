@@ -1,6 +1,6 @@
 <?php
 
-namespace AdminBundle\Form;
+namespace AppBundle\Form;
 
 use AdminBundle\Entity\Users;
 use Symfony\Component\Form\AbstractType;
@@ -17,13 +17,36 @@ class UsersType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
-            ->add('username', TextType::class)
-            ->add('password', RepeatedType::class, array(
-                'type' => PasswordType::class,
-                'first_options'  => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),
-            ))
+            ->add('email', EmailType::class, [
+                'label' => 'Email'
+            ])
+            ->add('firstName', TextType::class, [
+                'label' => 'Имя'
+            ])
+            ->add('secondName', TextType::class, [
+                'label' => 'Фамилия'
+            ])
+            ->add('thirdName', TextType::class, [
+                'label' => 'Отчество'
+            ])
+            ->add('username', TextType::class, [
+                'label' => 'Логин'
+            ])
+            ->add('city', TextType::class, [
+                'label' => 'Город'
+            ])
+            ->add('description', TextType::class, [
+                'label' => 'Oрганизация'
+            ])
+            ->add('username', TextType::class, [
+                'label' => 'Логин'
+            ])
+            ->add('password', PasswordType::class, [
+//                'type' => PasswordType::class,
+                'label' => 'Пароль'
+//                'first_options'  => array('label' => 'Password'),
+//                'second_options' => array('label' => 'Repeat Password'),
+            ])
         ;
     }
 

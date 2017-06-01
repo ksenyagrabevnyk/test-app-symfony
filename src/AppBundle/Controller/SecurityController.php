@@ -31,6 +31,12 @@ class SecurityController extends Controller
             'error' => $error,
             'form' => $form->createView()
         ));
+//        return $this->render(
+//            'Registration/register.html.twig', array(
+//            'last_username' => $this->get('request')->getSession()->get(SecurityContext::LAST_USERNAME),
+//            'error' => $error,
+//            'form' => $form->createView()
+//        ));
     }
 
     /**
