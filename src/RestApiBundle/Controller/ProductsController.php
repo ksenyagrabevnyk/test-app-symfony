@@ -27,27 +27,20 @@ use Symfony\Component\Validator\Mapping\CascadingStrategy;
 class ProductsController extends FOSRestController
 {
     /**
-     *   Authorization user and get info about products
+     *   Authorization user
      * ### REQUEST ###
      *
-     *      "device_token": "string"
+     *      "device_token": "string",
+     *      "firebase_id": "integer"
      *
      * ### RESPONSE ###
      * ### Status Code 200 and 201 ###
-     *       {
-     *          "user_uuid": "string",
-     *          "user_username": "string",
-     *          "user_first_name": "string",
-     *          "category_name": [
-     *               {
-     *                 "product_name": "string",
-     *                 "sale_price": "float",
-     *                 "purchase_price": "float",
-     *                 "profit": "float",
-     *                 "img_path": "string",
-     *               }
-     *           ],
-     *        }
+     *
+     *     {
+     *         "user_uuid": "string",
+     *         "user_username": "string",
+     *         "user_first_name": "string",
+     *      }
      *
      * ### Status Code 400 and 404 ###
      *
@@ -60,7 +53,7 @@ class ProductsController extends FOSRestController
      *
      * @Rest\Post("/auth")
      * @ApiDoc(
-     *  description="Login users and get info product",
+     *  description="Login users",
      *  section="User",
      *  resource=true,
      *  requirements={
@@ -92,13 +85,93 @@ class ProductsController extends FOSRestController
         $user =  $this->get('security.context')->getToken()->getUser();
         $userId = $user->getId();
 //        $deviceToken = $request->request->get('device_token');
-        $categories = $em->getRepository('AdminBundle:Categories')->getCategoryInfo();
+//        $categories = $em->getRepository('AdminBundle:Categories')->getCategoryInfo();
         $response = [];
         $userInfo = $em->getRepository(Users::class)
             ->getUserInformation($userId);
         $response["user_uuid"] = $userInfo["uuid"];
         $response["user_username"] = $userInfo['username'];
         $response["user_first_name"] = $userInfo['firstName'];
+
+//        foreach ($categories as $category) {
+//            $categoryId = $category["id"];
+//            $response[$category["name"]] = $em->getRepository('AdminBundle:Products')->getGenerationDataProducts($categoryId);
+//        }
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     *   Get info about products
+     * ### REQUEST ###
+     *
+     *      "user_uuid": "string",
+     *
+     *
+     * ### RESPONSE ###
+     * ### Status Code 200 and 201 ###
+     *       {
+     *          "categories": [
+     *               {
+     *                 "product_name": "string",
+     *                 "sale_price": "float",
+     *                 "purchase_price": "float",
+     *                 "profit": "float",
+     *                 "img_path": "string",
+     *               }
+     *           ],
+     *        }
+     *
+     * ### Status Code 400 and 404 ###
+     *
+     *     {
+     *       "error": {
+     *           "code": "integer",
+     *           "message": "String",
+     *       }
+     *     }
+     *
+     * @Rest\Post("/get-products")
+     * @ApiDoc(
+     *  description="Get info product",
+     *  section="Products",
+     *  resource=true,
+     *  requirements={
+     *      {
+     *          "name"="_format",
+     *          "dataType"="string",
+     *          "requirement"="json",
+     *      }
+     *  },
+     *  parameters={
+     *      {"name"="user_uuid", "dataType"="string", "format"="charset(32)", "required"=true, "description"="User uuid"},
+     *     },
+     *
+     *  statusCodes={
+     *      200="User login successfully",
+     *      201="User creating successfully",
+     *      400="Device Id not sent",
+     *      404="If user with user_uuid not found"
+     *  },
+     *     tags={
+     *         "ready for mob testing"
+     *     }
+     * )
+     *
+     */
+    public function getProductsAction(Request $request)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $user =  $this->get('security.context')->getToken()->getUser();
+        $userId = $user->getId();
+//        $deviceToken = $request->request->get('device_token');
+        $categories = $em->getRepository('AdminBundle:Categories')->getCategoryInfo();
+        $response = [];
+//        $userInfo = $em->getRepository(Users::class)
+//            ->getUserInformation($userId);
+//        $response["user_uuid"] = $userInfo["uuid"];
+//        $response["user_username"] = $userInfo['username'];
+//        $response["user_first_name"] = $userInfo['firstName'];
 
         foreach ($categories as $category) {
             $categoryId = $category["id"];
@@ -123,20 +196,8 @@ class ProductsController extends FOSRestController
      *
      * ### RESPONSE ###
      * ### Status Code 200 and 201 ###
-     *       {
-     *          "user_uuid": "string",
-     *          "user_username": "string",
-     *          "user_first_name": "string",
-     *           "category_name": [
-     *               {
-     *                 "product_name": "string",
-     *                 "sale_price": "float",
-     *                 "purchase_price": "float",
-     *                 "profit": "float",
-     *                 "img_path": "string",
-     *               }
-     *           ],
-     *        }
+     *
+     *          "success": "boolean";
      *
      * ### Status Code 400 and 404 ###
      *
@@ -193,6 +254,8 @@ class ProductsController extends FOSRestController
                 ->findOneBy([
                     'uuid' => $userUdid
                 ]);
+
+//            var_dump($checkUser->getId()); die;
             if ($checkProduct != null && $checkUser != null) {
                 $userId = $checkProduct->getId();
                 $orders = new Orders();
@@ -203,9 +266,11 @@ class ProductsController extends FOSRestController
                 $orders->setPurchaseDate($currentTime);
                 $em->persist($orders);
                 $em->flush();
+
+                return true;
             }
 
-            return true;
+            return false;
         }
     }
 }

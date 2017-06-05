@@ -71,3 +71,4 @@ class CategoriesRepository extends EntityRepository
             ;
     }
 }
+
