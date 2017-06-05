@@ -90,9 +90,10 @@ class ProductsController extends FOSRestController
         $userInfo = $em->getRepository(Users::class)
             ->getUserInformation($userId);
         $response["user_uuid"] = $userInfo["uuid"];
+        $response["user_id"] = $userInfo["id"];
         $response["user_username"] = $userInfo['username'];
         $response["user_first_name"] = $userInfo['firstName'];
-
+        $response["user_second_name"] = $userInfo['secondName'];
 //        foreach ($categories as $category) {
 //            $categoryId = $category["id"];
 //            $response[$category["name"]] = $em->getRepository('AdminBundle:Products')->getGenerationDataProducts($categoryId);
