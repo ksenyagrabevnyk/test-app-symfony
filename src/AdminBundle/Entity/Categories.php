@@ -37,6 +37,12 @@ class Categories
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AdminBundle\Entity\Users")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $userId;
+
+    /**
      * Set name
      *
      * @param string $name
@@ -90,6 +96,29 @@ class Categories
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set userId
+     *
+     * @param integer $userId
+     * @return Categories
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Get userId
+     *
+     * @return integer
+     */
+    public function getUserId()
+    {
+        return $this->userId;
     }
 
     public function __toString()

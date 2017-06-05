@@ -6,12 +6,15 @@ use Doctrine\ORM\EntityRepository;
 
 class CategoriesRepository extends EntityRepository
 {
-    public function getCountAllActiveCategories()
+    public function getCountAllActiveCategories($userId)
     {
         $category = $this->createQueryBuilder('qb')
             ->select('COUNT(qb.id)')
+            ->leftJoin('qb.userId', 'u')
             ->where('qb.isActive = true')
-            ;
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $userId)
+        ;
 
         return $category
             ->getQuery()
@@ -19,7 +22,7 @@ class CategoriesRepository extends EntityRepository
             ;
     }
 
-    public function getAllCategoriesQuery($search = null)
+    public function getAllCategoriesQuery($search = null, $userId)
     {
         $category = $this->createQueryBuilder('qb')
             ->select('
@@ -28,14 +31,20 @@ class CategoriesRepository extends EntityRepository
         ;
         if (!empty($search)) {
             $category
+                ->leftJoin('qb.userId', 'u')
                 ->where('qb.name LIKE :search')
                 ->andWhere('qb.isActive = true')
+                ->andWhere('u.id = :id')
                 ->setParameter('search', "%{search}%")
+                ->setParameter('id', $userId)
                 ->orderBy('qb.name')
                 ;
         } else {
             $category
+                ->leftJoin('qb.userId', 'u')
                 ->andWhere('qb.isActive = true')
+                ->andWhere('u.id = :id')
+                ->setParameter('id', $userId)
                 ->orderBy('qb.name')
                 ;
         }
@@ -50,7 +59,10 @@ class CategoriesRepository extends EntityRepository
     {
         $category = $this->createQueryBuilder('qb')
             ->select('qb')
+            ->leftJoin('qb.userId', 'u')
             ->where('qb.isActive = true')
+//            ->andWhere('u.id = :id')
+//            ->setParameter('id', $userId)
         ;
 
         return $category

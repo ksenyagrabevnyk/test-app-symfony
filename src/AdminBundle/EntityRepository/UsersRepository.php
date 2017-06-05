@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 
 class UsersRepository extends EntityRepository
 {
-    public function getUserInformation($deviceToken)
+    public function getUserInformation($userId)
     {
         $user = $this->createQueryBuilder('qb')
             ->select(
@@ -15,8 +15,8 @@ class UsersRepository extends EntityRepository
                  qb.firstName
                  ')
             ->where('qb.enabled = true')
-            ->andWhere('qb.deviceToken = :deviceToken')
-            ->setParameter('deviceToken', $deviceToken)
+            ->andWhere('qb.id = :id')
+            ->setParameter('id', $userId)
             ;
 
         return $user

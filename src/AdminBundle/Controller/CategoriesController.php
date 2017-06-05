@@ -3,6 +3,7 @@
 namespace AdminBundle\Controller;
 
 use AdminBundle\Entity\Categories;
+use AdminBundle\Entity\Users;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -29,11 +30,13 @@ class CategoriesController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->get('doctrine.orm.entity_manager');
+        $user =  $this->get('security.context')->getToken()->getUser();
+        $userId = $user->getId();
         $countAllActiveCategories = $em->getRepository(Categories::class)
-            ->getCountAllActiveCategories();
+            ->getCountAllActiveCategories($userId);
         $search = $request->get('search');
         $entities = $em->getRepository(Categories::class)
-            ->getAllCategoriesQuery($search);
+            ->getAllCategoriesQuery($search, $userId);
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $entities,
@@ -58,12 +61,14 @@ class CategoriesController extends Controller
      public function createAction(Request $request)
      {
          $em = $this->get('doctrine.orm.entity_manager');
+         $user =  $this->get('security.context')->getToken()->getUser();
          $entity = new Categories();
          $form = $this->createCreateForm($entity);
          $form->handleRequest($request);
 
          if ($form->isValid()) {
              $entity->setName($request->request->get('adminbundle_categories')['name']);
+             $entity->setUserId($user);
              $em->persist($entity);
              $em->flush();
 
@@ -179,7 +184,7 @@ class CategoriesController extends Controller
         $em = $this->get('doctrine.orm.entity_manager');
         $entity = $em->getRepository(Categories::class)
             ->find($id);
-
+        $user =  $this->get('security.context')->getToken()->getUser();
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Category entity.');
         }
@@ -190,6 +195,7 @@ class CategoriesController extends Controller
 
         if ($editForm->isValid()) {
             $entity->setName($request->request->get('adminbundle_categories')['name']);
+            $entity->setUserId($user);
             $em->flush();
 
             return $this->redirect($this->generateUrl('categories'));

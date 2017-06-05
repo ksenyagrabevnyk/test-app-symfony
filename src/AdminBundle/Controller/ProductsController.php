@@ -36,11 +36,13 @@ class ProductsController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->get('doctrine.orm.entity_manager');
+        $user =  $this->get('security.context')->getToken()->getUser();
+        $userId = $user->getId();
         $countAllActiveProducts = $em->getRepository(Products::class)
-            ->getCountAllActiveProducts();
+            ->getCountAllActiveProducts($userId);
         $search = $request->get('search');
         $entities = $em->getRepository(Products::class)
-            ->getAllProductsQuery($search);
+            ->getAllProductsQuery($search, $userId);
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $entities,

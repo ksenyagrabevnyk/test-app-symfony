@@ -3,7 +3,6 @@
 namespace AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Orders
@@ -23,9 +22,9 @@ class Orders
     private $id;
 
     /**
-     * @var datetime
+     * @var float
      *
-     * @ORM\Column(name="purchase_date", type="datetime", nullable=true)
+     * @ORM\Column(name="purchase_date", type="float", nullable=true)
      */
     private $purchaseDate;
 
@@ -61,7 +60,7 @@ class Orders
     /**
      * Set purchaseDate
      *
-     * @param datetime $purchaseDate
+     * @param float $purchaseDate
      * @return Orders
      */
     public function setPurchaseDate($purchaseDate)
@@ -74,7 +73,7 @@ class Orders
     /**
      * Get purchaseDate
      *
-     * @return datetime
+     * @return float
      */
     public function getPurchaseDate()
     {

@@ -6,11 +6,15 @@ use Doctrine\ORM\EntityRepository;
 
 class ProductsRepository extends EntityRepository
 {
-    public function getCountAllActiveProducts()
+    public function getCountAllActiveProducts($userId)
     {
         $products = $this->createQueryBuilder('qb')
             ->select('COUNT(qb.id)')
+            ->leftJoin('qb.categoryId', 'c')
+            ->leftJoin('c.userId', 'u')
             ->where('qb.isActive = true')
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $userId)
             ;
 
         return $products
@@ -19,23 +23,29 @@ class ProductsRepository extends EntityRepository
             ;
     }
 
-    public function getAllProductsQuery($search = null)
+    public function getAllProductsQuery($search = null, $userId)
     {
         $products = $this->createQueryBuilder('qb')
             ->select('
                  qb
             ')
+            ->leftJoin('qb.categoryId', 'c')
+            ->leftJoin('c.userId', 'u')
         ;
         if (!empty($search)) {
             $products
                 ->where('qb.name LIKE :search')
                 ->andWhere('qb.isActive = true')
+                ->andWhere('u.id = :id')
+                ->setParameter('id', $userId)
                 ->setParameter('search', "%{search}%")
                 ->orderBy('qb.name')
                 ;
         } else {
             $products
                 ->andWhere('qb.isActive = true')
+                ->andWhere('u.id = :id')
+                ->setParameter('id', $userId)
                 ->orderBy('qb.name')
                 ;
         }

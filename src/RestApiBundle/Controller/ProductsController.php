@@ -3,6 +3,7 @@
 namespace RestApiBundle\Controller;
 
 use AdminBundle\Entity\Categories;
+use AdminBundle\Entity\Orders;
 use AdminBundle\Entity\Products;
 use AdminBundle\Entity\Users;
 use AdminBundle\Helper\GenerationUUIDHelper;
@@ -37,7 +38,7 @@ class ProductsController extends FOSRestController
      *          "user_uuid": "string",
      *          "user_username": "string",
      *          "user_first_name": "string",
-     *           "category_name": [
+     *          "category_name": [
      *               {
      *                 "product_name": "string",
      *                 "sale_price": "float",
@@ -70,7 +71,7 @@ class ProductsController extends FOSRestController
      *      }
      *  },
      *  parameters={
-     *      {"name"="device_token", "dataType"="string", "format"="charset(32)", "required"=true, "description"="Device token"},
+     *      {"name"="device_token", "dataType"="string", "format"="charset(32)", "required"=false, "description"="Device token"},
      *     },
      *
      *  statusCodes={
@@ -80,7 +81,7 @@ class ProductsController extends FOSRestController
      *      404="If user with user_uuid not found"
      *  },
      *     tags={
-     *         "done"
+     *         "ready for mob testing"
      *     }
      * )
      *
@@ -88,11 +89,13 @@ class ProductsController extends FOSRestController
     public function authAction(Request $request)
     {
         $em = $this->get('doctrine.orm.entity_manager');
-        $deviceToken = $request->request->get('device_token');
+        $user =  $this->get('security.context')->getToken()->getUser();
+        $userId = $user->getId();
+//        $deviceToken = $request->request->get('device_token');
         $categories = $em->getRepository('AdminBundle:Categories')->getCategoryInfo();
         $response = [];
         $userInfo = $em->getRepository(Users::class)
-            ->getUserInformation($deviceToken);
+            ->getUserInformation($userId);
         $response["user_uuid"] = $userInfo["uuid"];
         $response["user_username"] = $userInfo['username'];
         $response["user_first_name"] = $userInfo['firstName'];
@@ -103,5 +106,106 @@ class ProductsController extends FOSRestController
         }
 
         return new JsonResponse($response);
+    }
+
+    /**
+     *   Buying products
+     *
+     * ### REQUEST ###
+     *
+     *          "user_uuid": "string",
+     *          "products": [
+     *                {
+     *                  "product_id": "integer",
+     *                  "count": "integer",
+     *                }
+     *           ]
+     *
+     * ### RESPONSE ###
+     * ### Status Code 200 and 201 ###
+     *       {
+     *          "user_uuid": "string",
+     *          "user_username": "string",
+     *          "user_first_name": "string",
+     *           "category_name": [
+     *               {
+     *                 "product_name": "string",
+     *                 "sale_price": "float",
+     *                 "purchase_price": "float",
+     *                 "profit": "float",
+     *                 "img_path": "string",
+     *               }
+     *           ],
+     *        }
+     *
+     * ### Status Code 400 and 404 ###
+     *
+     *     {
+     *       "error": {
+     *           "code": "integer",
+     *           "message": "String",
+     *       }
+     *     }
+     *
+     * @Rest\Post("/buy")
+     * @ApiDoc(
+     *  description="Buying products and save to db",
+     *  section="Buying",
+     *  resource=true,
+     *  requirements={
+     *      {
+     *          "name"="_format",
+     *          "dataType"="string",
+     *          "requirement"="json",
+     *      }
+     *  },
+     *  parameters={
+     *      {"name"="user_uuid", "dataType"="string", "format"="charset(32)", "required"=true, "description"="Unique identificator user "},
+     *      {"name"="products", "dataType"="json", "format"="json", "required"=true, "description"="Json with array products and count"},
+     *     },
+     *
+     *  statusCodes={
+     *      200="User login successfully",
+     *      201="User creating successfully",
+     *      400="Device Id not sent",
+     *      404="If user with user_uuid not found"
+     *  },
+     *     tags={
+     *         "ready for mob testing"
+     *     }
+     * )
+     *
+     */
+    public function buyingAction(Request $request)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $userUdid = $request->request->get('user_uuid');
+        $products = json_decode($request->request->get('products'), true);
+
+        foreach ($products as $product) {
+            $productId = $product['product_id'];
+            $productCount = $product['count'];
+            $checkProduct = $em->getRepository(Products::class)
+                ->findOneBy([
+                    'id' => $productId
+                ]);
+            $checkUser = $em->getRepository(Users::class)
+                ->findOneBy([
+                    'uuid' => $userUdid
+                ]);
+            if ($checkProduct != null && $checkUser != null) {
+                $userId = $checkProduct->getId();
+                $orders = new Orders();
+                $orders->setUserId($checkUser);
+                $orders->setProductId($checkProduct);
+                $orders->setCount($productCount);
+                $currentTime = getdate()[0];
+                $orders->setPurchaseDate($currentTime);
+                $em->persist($orders);
+                $em->flush();
+            }
+
+            return true;
+        }
     }
 }
