@@ -114,6 +114,7 @@ class ProductsController extends FOSRestController
      *       {
      *          "categories": [
      *               {
+     *                 "product_id": "integer",
      *                 "product_name": "string",
      *                 "sale_price": "float",
      *                 "purchase_price": "float",

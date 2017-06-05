@@ -61,10 +61,14 @@ class ProductsRepository extends EntityRepository
             ->select('
                 qb.id AS product_id,
                 qb.name AS product_name,
-                qb.salePrice,
-                c.id AS category_id, 
-                c.name AS category_name
-            ')
+                qb.salePrice AS sale_price,
+                qb.salePrice AS purchase_price,
+                qb.profit AS profit,
+                qb.imgPath AS img_path'
+
+//                c.id AS category_id,
+//                c.name AS category_name
+            )
             ->leftJoin('qb.categoryId', 'c')
             ->where('qb.isActive = true')
             ->andWhere('c.isActive = true')
