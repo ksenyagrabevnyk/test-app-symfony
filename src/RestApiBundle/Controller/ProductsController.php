@@ -66,7 +66,7 @@ class ProductsController extends FOSRestController
      *  parameters={
      *      {"name"="device_token", "dataType"="string", "format"="charset(32)", "required"=false, "description"="Device token"},
      *      {"name"="firebase_id", "dataType"="integer", "required"=false, "description"="firebase id for push notifications"},
-     *      },
+     *    },
      *
      *  statusCodes={
      *      200="User login successfully",
