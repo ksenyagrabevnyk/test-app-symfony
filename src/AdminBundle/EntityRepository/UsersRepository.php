@@ -10,9 +10,11 @@ class UsersRepository extends EntityRepository
     {
         $user = $this->createQueryBuilder('qb')
             ->select(
-                'qb.uuid, 
+                'qb.id,
+                 qb.uuid, 
                  qb.username, 
-                 qb.firstName
+                 qb.firstName,
+                 qb.secondName
                  ')
             ->where('qb.enabled = true')
             ->andWhere('qb.id = :id')
