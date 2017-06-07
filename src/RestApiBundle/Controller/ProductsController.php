@@ -115,15 +115,21 @@ class ProductsController extends FOSRestController
      *       {
      *          "categories": [
      *               {
-     *                 "product_id": "integer",
-     *                 "product_name": "string",
-     *                 "sale_price": "float",
-     *                 "purchase_price": "float",
-     *                 "profit": "float",
-     *                 "img_path": "string",
-     *               }
-     *           ],
-     *        }
+     *                  "category_name": "string",
+     *                  "category_id": "integer",
+     *                  "products": [
+     *                        {
+     *                           "product_id": "integer",
+     *                           "product_name": "string",
+     *                           "sale_price": "float",
+     *                           "purchase_price": "float",
+     *                           "profit": "float",
+     *                           "img_path": "string",
+     *                         }
+     *                    ],
+     *                 }
+     *             ],
+     *          }
      *
      * ### Status Code 400 and 404 ###
      *
@@ -165,20 +171,22 @@ class ProductsController extends FOSRestController
     public function getProductsAction(Request $request)
     {
         $em = $this->get('doctrine.orm.entity_manager');
-        $user =  $this->get('security.context')->getToken()->getUser();
-        $userId = $user->getId();
-//        $deviceToken = $request->request->get('device_token');
-        $categories = $em->getRepository('AdminBundle:Categories')->getCategoryInfo();
-        $response = [];
-//        $userInfo = $em->getRepository(Users::class)
-//            ->getUserInformation($userId);
-//        $response["user_uuid"] = $userInfo["uuid"];
-//        $response["user_username"] = $userInfo['username'];
-//        $response["user_first_name"] = $userInfo['firstName'];
+        $userUuid = $request->get('user_uuid');
+        $userId = $em->getRepository(Users::class)
+            ->findOneBy([
+                'uuid' => $userUuid
+            ])
+            ->getId();
+        $categories = $em->getRepository('AdminBundle:Categories')->getCategoryInfo($userId);
+        $response['categories'] = [];
 
         foreach ($categories as $category) {
             $categoryId = $category["id"];
-            $response[$category["name"]] = $em->getRepository('AdminBundle:Products')->getGenerationDataProducts($categoryId);
+            $response['categories'][] = [
+                'category_name' => $category["name"],
+                'category_id' => $category["id"],
+                'products' => $em->getRepository('AdminBundle:Products')->getGenerationDataProducts($categoryId)
+            ];
         }
 
         return new JsonResponse($response);

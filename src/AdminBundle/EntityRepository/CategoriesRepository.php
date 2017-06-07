@@ -55,14 +55,14 @@ class CategoriesRepository extends EntityRepository
             ;
     }
 
-    public function getCategoryInfo()
+    public function getCategoryInfo($userId)
     {
         $category = $this->createQueryBuilder('qb')
             ->select('qb')
             ->leftJoin('qb.userId', 'u')
             ->where('qb.isActive = true')
-//            ->andWhere('u.id = :id')
-//            ->setParameter('id', $userId)
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $userId)
         ;
 
         return $category
