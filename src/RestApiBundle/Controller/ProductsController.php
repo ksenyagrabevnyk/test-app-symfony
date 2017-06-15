@@ -19,6 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
+//use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\Version;
@@ -93,11 +94,10 @@ class ProductsController extends FOSRestController
         $deviceToken = $request->request->get('device_token');
         $checkCurrentUser = $em->getRepository(Users::class)
             ->findOneBy([
-                'username' => $userName
-//                'password' => $userPassword
+                'username' => $userName,
+                'password' => $userPassword
             ]);
         $response = [];
-        var_dump($userName); die;
 
         if(!empty($checkCurrentUser)) {
             $userId = $checkCurrentUser->getId();
@@ -109,9 +109,14 @@ class ProductsController extends FOSRestController
             $response["user_first_name"] = $userInfo['firstName'];
             $response["user_second_name"] = $userInfo['secondName'];
 
-
             return new JsonResponse($response);
 
+//        } elseif(empty($checkCurrentUser)) {
+//
+//            return "User not found, maybe you not registered";
+        } else {
+
+            return "User not found, maybe you not registered";
         }
 
     }
