@@ -272,6 +272,9 @@ class ProductsController extends FOSRestController
         $userUdid = $request->request->get('user_uuid');
         $products = json_decode($request->request->get('products'), true);
 
+//        var_dump($products); die;
+
+
         foreach ($products as $product) {
             $productId = $product['product_id'];
             $productCount = $product['count'];
@@ -296,10 +299,16 @@ class ProductsController extends FOSRestController
                 $em->persist($orders);
                 $em->flush();
 
-                return true;
+                $response['success'] = true;
+
+                return $response;
+
             }
 
-            return false;
+            $response['success'] = false;
+
+            return $response;
+
         }
     }
 }
