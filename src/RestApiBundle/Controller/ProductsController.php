@@ -95,7 +95,7 @@ class ProductsController extends FOSRestController
         $checkCurrentUser = $em->getRepository(Users::class)
             ->findOneBy([
                 'username' => $userName,
-                'password' => $userPassword
+//                'password' => $userPassword
             ]);
         $response = [];
 
@@ -272,9 +272,6 @@ class ProductsController extends FOSRestController
         $userUdid = $request->request->get('user_uuid');
         $products = json_decode($request->request->get('products'), true);
 
-//        var_dump($products); die;
-
-
         foreach ($products as $product) {
             $productId = $product['product_id'];
             $productCount = $product['count'];
@@ -287,9 +284,7 @@ class ProductsController extends FOSRestController
                     'uuid' => $userUdid
                 ]);
 
-//            var_dump($checkUser->getId()); die;
             if ($checkProduct != null && $checkUser != null) {
-                $userId = $checkProduct->getId();
                 $orders = new Orders();
                 $orders->setUserId($checkUser);
                 $orders->setProductId($checkProduct);
@@ -297,18 +292,16 @@ class ProductsController extends FOSRestController
                 $currentTime = getdate()[0];
                 $orders->setPurchaseDate($currentTime);
                 $em->persist($orders);
-                $em->flush();
-
                 $response['success'] = true;
 
-                return $response;
+            } else {
 
+                $response['success'] = false;
             }
-
-            $response['success'] = false;
-
-            return $response;
-
         }
+
+        $em->flush();
+
+        return $response;
     }
 }
