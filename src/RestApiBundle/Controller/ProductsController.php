@@ -19,6 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\Version;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -29,7 +30,8 @@ class ProductsController extends FOSRestController
     /**
      *   Authorization user
      * ### REQUEST ###
-     *
+     *      "user_username": "string",
+     *      "user_password": "string",
      *      "device_token": "string",
      *      "firebase_id": "integer"
      *
@@ -66,7 +68,9 @@ class ProductsController extends FOSRestController
      *  parameters={
      *      {"name"="device_token", "dataType"="string", "format"="charset(32)", "required"=false, "description"="Device token"},
      *      {"name"="firebase_id", "dataType"="integer", "required"=false, "description"="firebase id for push notifications"},
-     *    },
+     *      {"name"="user_username", "dataType"="string", "required"=false, "description"="User Name"},
+     *      {"name"="user_password", "dataType"="string", "required"=false, "description"="User Password"},
+     *      },
      *
      *  statusCodes={
      *      200="User login successfully",
@@ -84,23 +88,32 @@ class ProductsController extends FOSRestController
     {
         $em = $this->get('doctrine.orm.entity_manager');
         $user =  $this->get('security.context')->getToken()->getUser();
-        $userId = $user->getId();
-//        $deviceToken = $request->request->get('device_token');
-//        $categories = $em->getRepository('AdminBundle:Categories')->getCategoryInfo();
+        $userName = $request->request->get('user_username');
+        $userPassword = $request->request->get('user_password');
+        $deviceToken = $request->request->get('device_token');
+        $checkCurrentUser = $em->getRepository(Users::class)
+            ->findOneBy([
+                'username' => $userName
+//                'password' => $userPassword
+            ]);
         $response = [];
-        $userInfo = $em->getRepository(Users::class)
-            ->getUserInformation($userId);
-        $response["user_uuid"] = $userInfo["uuid"];
-        $response["user_id"] = $userInfo["id"];
-        $response["user_username"] = $userInfo['username'];
-        $response["user_first_name"] = $userInfo['firstName'];
-        $response["user_second_name"] = $userInfo['secondName'];
-//        foreach ($categories as $category) {
-//            $categoryId = $category["id"];
-//            $response[$category["name"]] = $em->getRepository('AdminBundle:Products')->getGenerationDataProducts($categoryId);
-//        }
+        var_dump($userName); die;
 
-        return new JsonResponse($response);
+        if(!empty($checkCurrentUser)) {
+            $userId = $checkCurrentUser->getId();
+            $userInfo = $em->getRepository(Users::class)
+                ->getUserInformation($userId);
+            $response["user_uuid"] = $userInfo["uuid"];
+            $response["user_id"] = $userInfo["id"];
+            $response["user_username"] = $userInfo['username'];
+            $response["user_first_name"] = $userInfo['firstName'];
+            $response["user_second_name"] = $userInfo['secondName'];
+
+
+            return new JsonResponse($response);
+
+        }
+
     }
 
     /**
