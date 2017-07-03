@@ -8,7 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
  * Orders
  *
  * @ORM\Table(name="orders")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AdminBundle\EntityRepository\OrdersRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Orders
 {
@@ -22,9 +23,9 @@ class Orders
     private $id;
 
     /**
-     * @var float
+     * @var \DateTime
      *
-     * @ORM\Column(name="purchase_date", type="float", nullable=true)
+     * @ORM\Column(name="purchase_date", type="datetime", nullable=true)
      */
     private $purchaseDate;
 
@@ -60,7 +61,7 @@ class Orders
     /**
      * Set purchaseDate
      *
-     * @param float $purchaseDate
+     * @param \DateTime|string $purchaseDate
      * @return Orders
      */
     public function setPurchaseDate($purchaseDate)
@@ -73,7 +74,7 @@ class Orders
     /**
      * Get purchaseDate
      *
-     * @return float
+     * @return \DateTime
      */
     public function getPurchaseDate()
     {

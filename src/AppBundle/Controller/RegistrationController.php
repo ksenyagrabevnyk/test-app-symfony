@@ -30,7 +30,7 @@ class RegistrationController extends Controller
             // must fixed this
             $userRole = $em->getRepository(Roles::class)
                 ->findOneBy([
-                    'id' => 1
+                    'name' => 'ROLE_ADMIN'
                 ]);
             $user->setRole($userRole);
             $em->persist($user);

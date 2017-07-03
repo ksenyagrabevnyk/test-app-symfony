@@ -24,6 +24,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\Version;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Validator\Mapping\CascadingStrategy;
 
 class ProductsController extends FOSRestController
@@ -31,18 +32,18 @@ class ProductsController extends FOSRestController
     /**
      *   Authorization user
      * ### REQUEST ###
-     *      "user_username": "string",
-     *      "user_password": "string",
+     *      "name": "string",
+     *      "password": "string",
      *      "device_token": "string",
-     *      "firebase_id": "integer"
+     *      "firebase_token": "integer"
      *
      * ### RESPONSE ###
      * ### Status Code 200 and 201 ###
      *
      *     {
-     *         "user_uuid": "string",
-     *         "user_username": "string",
-     *         "user_first_name": "string",
+     *         "token": "string",
+     *         "first_name": "string",
+     *         "last_name": "string",
      *      }
      *
      * ### Status Code 400 and 404 ###
@@ -68,9 +69,9 @@ class ProductsController extends FOSRestController
      *  },
      *  parameters={
      *      {"name"="device_token", "dataType"="string", "format"="charset(32)", "required"=false, "description"="Device token"},
-     *      {"name"="firebase_id", "dataType"="integer", "required"=false, "description"="firebase id for push notifications"},
-     *      {"name"="user_username", "dataType"="string", "required"=false, "description"="User Name"},
-     *      {"name"="user_password", "dataType"="string", "required"=false, "description"="User Password"},
+     *      {"name"="firebase_token", "dataType"="integer", "required"=false, "description"="firebase id for push notifications"},
+     *      {"name"="name", "dataType"="string", "required"=false, "description"="User Name"},
+     *      {"name"="password", "dataType"="string", "required"=false, "description"="User Password"},
      *      },
      *
      *  statusCodes={
@@ -89,13 +90,13 @@ class ProductsController extends FOSRestController
     {
         $em = $this->get('doctrine.orm.entity_manager');
         $user =  $this->get('security.context')->getToken()->getUser();
-        $userName = $request->request->get('user_username');
-        $userPassword = $request->request->get('user_password');
+        $userName = $request->request->get('name');
+        $userPassword = $request->request->get('password');
         $deviceToken = $request->request->get('device_token');
         $checkCurrentUser = $em->getRepository(Users::class)
             ->findOneBy([
                 'username' => $userName,
-//                'password' => $userPassword
+                'password' => $userPassword
             ]);
         $response = [];
 
@@ -103,9 +104,7 @@ class ProductsController extends FOSRestController
             $userId = $checkCurrentUser->getId();
             $userInfo = $em->getRepository(Users::class)
                 ->getUserInformation($userId);
-            $response["user_uuid"] = $userInfo["uuid"];
-            $response["user_id"] = $userInfo["id"];
-            $response["user_username"] = $userInfo['username'];
+            $response["token"] = $userInfo["uuid"];
             $response["user_first_name"] = $userInfo['firstName'];
             $response["user_second_name"] = $userInfo['secondName'];
 
@@ -289,7 +288,9 @@ class ProductsController extends FOSRestController
                 $orders->setUserId($checkUser);
                 $orders->setProductId($checkProduct);
                 $orders->setCount($productCount);
-                $currentTime = getdate()[0];
+                $currentTime = $currentDate = new \DateTime(
+                    $request->query->get('start_date', 'now')
+                );
                 $orders->setPurchaseDate($currentTime);
                 $em->persist($orders);
                 $response['success'] = true;
