@@ -35,7 +35,7 @@ class ProductsController extends Controller
      */
     public function indexAction(Request $request)
     {
-//        phpinfo(); die();
+        phpinfo(); die();
         $em = $this->get('doctrine.orm.entity_manager');
         $user = $this->get('security.context')->getToken()->getUser();
         $userId = $user->getId();
