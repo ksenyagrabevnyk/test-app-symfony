@@ -1,10 +1,22 @@
 # This file is auto-generated during the composer install
+#parameters:
+#    database_host: localhost
+#    database_port: 8889
+#    database_name: test-app
+#    database_user: root
+#    database_password: root
+#    mailer_transport: gmail
+#    mailer_host: gmail.com
+#    mailer_user: test.for.symfony@gmail.com
+#    mailer_password: emailForSymfony
+#    secret: ThisTokenIsNotSoSecretChangeIt
+
 parameters:
-    database_host: localhost
-    database_port: 8889
-    database_name: test-app
-    database_user: root
-    database_password: root
+    database_host: eu-cdbr-west-01.cleardb.com
+    database_port: 3306
+    database_name: heroku_5510ada1190cf4a
+    database_user: b202e3ea68099f
+    database_password: f271d676
     mailer_transport: gmail
     mailer_host: gmail.com
     mailer_user: test.for.symfony@gmail.com
