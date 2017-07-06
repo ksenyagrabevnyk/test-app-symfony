@@ -9,6 +9,7 @@
         }
     },
     "require": {
+        "ext-imagick": "*",
         "php": ">=5.3.9",
         "symfony/symfony": "2.8.*",
         "doctrine/orm": "~2.2,>=2.2.3,<2.5",
@@ -67,3 +68,5 @@
         }
     }
 }
+
+//https://github.com/heroku/heroku-buildpack-php
