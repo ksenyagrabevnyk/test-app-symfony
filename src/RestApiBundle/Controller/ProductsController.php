@@ -78,7 +78,7 @@ class ProductsController extends FOSRestController
      *      200="User login successfully",
      *      201="User creating successfully",
      *      400="Device Id not sent",
-     *      404="If user with user_uuid not found"
+     *      404="If user with users token not found"
      *  },
      *     tags={
      *         "ready for mob testing"
@@ -105,8 +105,8 @@ class ProductsController extends FOSRestController
             $userInfo = $em->getRepository(Users::class)
                 ->getUserInformation($userId);
             $response["token"] = $userInfo["uuid"];
-            $response["user_first_name"] = $userInfo['firstName'];
-            $response["user_second_name"] = $userInfo['secondName'];
+            $response["first_name"] = $userInfo['firstName'];
+            $response["second_name"] = $userInfo['secondName'];
 
             return new JsonResponse($response);
 
@@ -124,7 +124,7 @@ class ProductsController extends FOSRestController
      *   Get info about products
      * ### REQUEST ###
      *
-     *      "user_uuid": "string",
+     *      "token": "string",
      *
      *
      * ### RESPONSE ###
@@ -170,14 +170,14 @@ class ProductsController extends FOSRestController
      *      }
      *  },
      *  parameters={
-     *      {"name"="user_uuid", "dataType"="string", "format"="charset(32)", "required"=true, "description"="User uuid"},
+     *      {"name"="token", "dataType"="string", "format"="charset(32)", "required"=true, "description"="User uuid"},
      *     },
      *
      *  statusCodes={
      *      200="User login successfully",
      *      201="User creating successfully",
      *      400="Device Id not sent",
-     *      404="If user with user_uuid not found"
+     *      404="If user with users token not found"
      *  },
      *     tags={
      *         "ready for mob testing"
@@ -188,7 +188,7 @@ class ProductsController extends FOSRestController
     public function getProductsAction(Request $request)
     {
         $em = $this->get('doctrine.orm.entity_manager');
-        $userUuid = $request->get('user_uuid');
+        $userUuid = $request->get('token');
         $userId = $em->getRepository(Users::class)
             ->findOneBy([
                 'uuid' => $userUuid
@@ -214,7 +214,7 @@ class ProductsController extends FOSRestController
      *
      * ### REQUEST ###
      *
-     *          "user_uuid": "string",
+     *          "token": "string",
      *          "products": [
      *                {
      *                  "product_id": "integer",
@@ -249,7 +249,7 @@ class ProductsController extends FOSRestController
      *      }
      *  },
      *  parameters={
-     *      {"name"="user_uuid", "dataType"="string", "format"="charset(32)", "required"=true, "description"="Unique identificator user "},
+     *      {"name"="token", "dataType"="string", "format"="charset(32)", "required"=true, "description"="Unique identificator user "},
      *      {"name"="products", "dataType"="json", "format"="json", "required"=true, "description"="Json with array products and count"},
      *     },
      *
@@ -257,7 +257,7 @@ class ProductsController extends FOSRestController
      *      200="User login successfully",
      *      201="User creating successfully",
      *      400="Device Id not sent",
-     *      404="If user with user_uuid not found"
+     *      404="If user with users token not found"
      *  },
      *     tags={
      *         "ready for mob testing"
@@ -268,7 +268,7 @@ class ProductsController extends FOSRestController
     public function buyingAction(Request $request)
     {
         $em = $this->get('doctrine.orm.entity_manager');
-        $userUdid = $request->request->get('user_uuid');
+        $userUdid = $request->request->get('token');
         $products = json_decode($request->request->get('products'), true);
 
         foreach ($products as $product) {

@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use AdminBundle\Form\ProductsType;
+use AdminBundle\Form\ProductsCropType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -35,6 +35,7 @@ class ProductsController extends Controller
      */
     public function indexAction(Request $request)
     {
+        phpinfo(); die();
         $em = $this->get('doctrine.orm.entity_manager');
         $user =  $this->get('security.context')->getToken()->getUser();
         $userId = $user->getId();
@@ -52,7 +53,7 @@ class ProductsController extends Controller
 
         if (!count($pagination->getItems()) && !empty($search)) {
             $this->container->get('session')->getFlashBag()->clear();
-            $this->get('session')->getFlashBag()->add('error', 'Тема не найдена');
+            $this->get('session')->getFlashBag()->add('error', 'Products not found');
         }
 
         return $this->render('AdminBundle:Products:index.html.twig', [
@@ -73,24 +74,20 @@ class ProductsController extends Controller
         $entity = new Products();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
+        $uploadService = $this->get('app.photo.upload.service');
 
         if ($form->isValid()) {
-            $categoryId = $request->request->get('adminbundle_products')['categoryId'];
+            $categoryId = $request->request->get('adminbundle_products_crop')['categoryId'];
             $category = $em->getRepository(Categories::class)->find($categoryId);
-            $entity->setName($request->request->get('adminbundle_products')['name']);
+            $entity->setName($request->request->get('adminbundle_products_crop')['name']);
             $entity->setCategoryId($category);
-            $entity->setSalePrice($request->request->get('adminbundle_products')['salePrice']);
-            $entity->setPurchasePrice($request->request->get('adminbundle_products')['purchasePrice']);
-            $entity->setProfit($request->request->get('adminbundle_products')['profit']);
-            $entity->setImgPath('uploads/products/'. $this->get('file_uploader')->upload($entity->getImgPath()));
-//            if (!empty($entity->getPhotoName())) {
-//                $path = 'uploads/products/'.$entity->getId().'/'.$entity->getPhotoName();
-//                $entity->setImgPath($path);
-//                $em->persist($entity);
-//                $em->flush();
-//            }
+            $entity->setSalePrice($request->request->get('adminbundle_products_crop')['salePrice']);
+            $entity->setPurchasePrice($request->request->get('adminbundle_products_crop')['purchasePrice']);
+            $entity->setProfit($request->request->get('adminbundle_products_crop')['profit']);
+            $cropperFilteredImage = $uploadService->filterCroppedPhoto($entity);
+            $entity->setImgPath($cropperFilteredImage);
 
-            $em->persist($entity);
+//            $em->persist($entity);
             $em->flush();
 
             return $this->redirect($this->generateUrl('products'));
@@ -102,33 +99,36 @@ class ProductsController extends Controller
         ]);
     }
 
-//    /**
-//     * Creates a new Image for Products entity.
-//     *
-//     * @Route("/save_img", name="save_img")
-//     * @Method("POST")
-//     */
-//    public function saveAction(Request $request)
-//    {
-//        $image = $request->request->get('image');
-//
-//        $preg = '#^data:image/\w+;base64,#i';
-//        $imageDecoded = base64_decode(preg_replace($preg, '', $image));
-//
-//        $info = getimagesize($image);
-//
-//        $extension = image_type_to_extension($info[2]);
-//        $imageName = md5(uniqid(rand(), true))."".$extension;
-//
-//        $path = $this->get('kernel')->getRootDir().'/../web/tmp/';
-//        $filePath = $path.$imageName;
-//
-//        file_put_contents($filePath, $imageDecoded);
-//        die();
-//    }
+    /**
+     * Creates a new Image for Products entity.
+     *
+     * @Route("/save_img", name="save_img")
+     * @Method("POST")
+     */
+    public function saveAction(Request $request)
+    {
+        $image = $request->request->get('image');
+
+        var_dump($image); die;
+        $preg = '#^data:image/\w+;base64,#i';
+        $imageDecoded = base64_decode(preg_replace($preg, '', $image));
+
+        $info = getimagesize($image);
+
+        $extension = image_type_to_extension($info[2]);
+        $imageName = md5(uniqid(rand(), true))."".$extension;
+
+        $imageName = '/tmp/'.$imageName;
+        $path = $this->get('kernel')->getRootDir().'/../web'.$imageName;
+
+        file_put_contents($path, $imageDecoded);
+
+        return new JsonResponse(['image_path' => $imageName]);
+    }
+
 
     /**
-     * Creates a form to create a Card entity.
+     * Creates a form to create a Products entity.
      *
      * @param Products $entity The entity
      *
@@ -136,7 +136,7 @@ class ProductsController extends Controller
      */
     private function createCreateForm(Products $entity)
     {
-        $form = $this->createForm(new ProductsType(), $entity, [
+        $form = $this->createForm(new ProductsCropType(), $entity, [
             'action' => $this->generateUrl('product_create'),
             'method' => 'POST',
         ]);
@@ -179,17 +179,8 @@ class ProductsController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find product entity.');
         }
-//        $em = $this->get('doctrine.orm.entity_manager');
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
-
-//        if (!empty($entity->getPhotoName())) {
-//            $path = 'uploads/theme/'.$entity->getId().'/'.$entity->getPhotoName();
-//            $entity->setImgPath($path);
-//            $em->persist($entity);
-//            $em->flush();
-//        }
-//        var_dump(323); die;
 
         return $this->render('AdminBundle:Products:edit.html.twig', [
             'entity'      => $entity,
@@ -207,37 +198,41 @@ class ProductsController extends Controller
      */
     private function createEditForm(Products $entity)
     {
-        $form = $this->createForm(new ProductsType(), $entity, [
-                'action' => $this->generateUrl(
-                'product_update', [
-                'id' => $entity->getId()
-            ]),
-            'method' => 'PUT',
-        ]);
-
-        $form->add('submit', 'submit', [
-            'label' => 'Update',
-            'attr' => ['class' => 'btn btn-danger']
-        ])
-            ->add('imgPath', FileType::class, [
-                'empty_data' => 'uploads/'.$entity->getImgPath(),
-                'required' => false,
-                'data_class' => null,
-            ]);
-
-
-//        var_dump(22);
-//        $form->add('submit', 'submit', ['label' => 'Update']);
-
+//        $form = $this->createForm(new ProductsType(), $entity, [
+//                'action' => $this->generateUrl(
+//                'product_update', [
+//                'id' => $entity->getId()
+//            ]),
+//            'method' => 'PUT',
+//        ]);
+//
 //        $form->add('submit', 'submit', [
 //            'label' => 'Update',
 //            'attr' => ['class' => 'btn btn-danger']
 //        ])
-//            ->add('photoPath', FileType::class, [
+//            ->add('imgPath', FileType::class, [
 //                'empty_data' => 'uploads/'.$entity->getImgPath(),
 //                'required' => false,
 //                'data_class' => null,
 //            ]);
+
+        $form = $this->createForm(
+            new ProductsCropType(),
+            $entity,
+            [
+                'action' => $this->generateUrl(
+                    'product_update',
+                    [
+                        'id' => $entity->getId(),
+                    ]
+                ),
+                'method' => 'PUT',
+            ]
+        );
+
+        $form->add('submit', 'submit', ['label' => 'Обновить']);
+
+
 
         return $form;
     }
@@ -250,9 +245,11 @@ class ProductsController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-//        var_dump(44); die;
         $em = $this->get('doctrine.orm.entity_manager');
         $entity = $em->getRepository(Products::class)->find($id);
+        $uploadService = $this->get('app.photo.upload.service');
+
+//        var_dump($uploadService); die;
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find products entity.');
@@ -260,31 +257,24 @@ class ProductsController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
-        $oldFileName = $entity->getImgPath();
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $entity->setImgPath('uploads/products/'. $this->get('file_uploader')->upload($entity->getImgPath()));
-
-//            $entity->setImgPath($this->get('file_uploader')->upload($entity->getImgPath()));
             $em->flush();
-            $fs = new Filesystem();
-            $fs->remove(['uploads/'.$oldFileName]);
-//            if (!empty($entity->getPhotoName())) {
-//                $path = 'uploads/product/'.$entity->getId().'/'.$entity->getPhotoName();
-//                $entity->setImgPath($path);
-//                $em->persist($entity);
-//                $em->flush();
-//            }
+            $categoryId = $request->request->get('adminbundle_products_crop')['categoryId'];
+//            var_dump($categoryId); die;
 
-            $categoryId = $request->request->get('adminbundle_products')['categoryId'];
             $category = $em->getRepository(Categories::class)->find($categoryId);
-            $entity->setName($request->request->get('adminbundle_products')['name']);
+            $entity->setName($request->request->get('adminbundle_products_crop')['name']);
             $entity->setCategoryId($category);
-            $entity->setSalePrice($request->request->get('adminbundle_products')['salePrice']);
-            $entity->setPurchasePrice($request->request->get('adminbundle_products')['purchasePrice']);
-            $entity->setProfit($request->request->get('adminbundle_products')['profit']);
+            $entity->setSalePrice($request->request->get('adminbundle_products_crop')['salePrice']);
+            $entity->setPurchasePrice($request->request->get('adminbundle_products_crop')['purchasePrice']);
+            $entity->setProfit($request->request->get('adminbundle_products_crop')['profit']);
 //            $entity->setImgPath($request->request->get('adminbundle_products')['imgPath']);
+
+            $cropperFilteredImage = $uploadService->filterCroppedPhoto($entity);
+            $entity->setImgName($cropperFilteredImage);
+
             $em->flush();
 
             return $this->redirect($this->generateUrl('products'));
@@ -310,39 +300,43 @@ class ProductsController extends Controller
         $em = $this->get('doctrine.orm.entity_manager');
         $entity = $em->getRepository(Products::class)->find($id)->setIsActive(0);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AdminBundle:Products')->find($id);
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Product entity.');
-            }
-
-            $fs = new Filesystem();
-            $fs->remove(['uploads/'.$entity->getImgPath()]);
-            $em->remove($entity);
-            $em->flush();
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Product entity.');
         }
+
+//        if ($form->isValid()) {
+//            $em = $this->getDoctrine()->getManager();
+//            $entity = $em->getRepository('AdminBundle:Products')->find($id);
+//            if (!$entity) {
+//                throw $this->createNotFoundException('Unable to find Product entity.');
+//            }
+//
+//            $fs = new Filesystem();
+//            $fs->remove(['uploads/'.$entity->getImgPath()]);
+//            $em->remove($entity);
+            $em->flush();
+//        }
 
         return $this->redirect($this->generateUrl('products'));
     }
 
-//    /**
-//     * Deletes a Product picture.
-//     *
-//     * @Route("/image-ajax-delete", name="image-ajax-delete")
-//     * @Method("POST")
-//     */
-//    public function deletePicAction(Request $request)
-//    {
-//        $id = $request->get('id');
-//        $em = $this->getDoctrine()->getManager();
-//        $entity = $em->getRepository(Products::class)
-//            ->find($id);
-//        $entity->removeUpload();
-//        $em->flush();
-//
-//        return new Response('ok', 200);
-//    }
+    /**
+     * Deletes a Product picture.
+     *
+     * @Route("/image-ajax-delete", name="image-ajax-delete")
+     * @Method("POST")
+     */
+    public function deletePicAction(Request $request)
+    {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository(Products::class)
+            ->find($id);
+        $entity->removeUpload();
+        $em->flush();
+
+        return new Response('ok', 200);
+    }
 
     /**
      * Creates a form to delete a Products entity by id.

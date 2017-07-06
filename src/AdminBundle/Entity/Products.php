@@ -12,7 +12,7 @@ use AdminBundle\Helper\UploadImageHelper;
  * @ORM\Entity(repositoryClass="AdminBundle\EntityRepository\ProductsRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Products
+class Products extends UploadImageHelper
 {
     /**
      * @var string

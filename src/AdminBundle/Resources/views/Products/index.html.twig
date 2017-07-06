@@ -93,9 +93,11 @@
                                         {{ entity.profit }}
                                     </td>
                                     <td class=" ">
-                                        {% if entity.imgPath is not null %}
-                                            {#<img src="{{ asset(entity.getWebPath()) | imagine_filter('theme_list') }}">#}
+                                        {% if entity.imgPath is not empty %}
                                             <img src="{{ asset(entity.imgPath) }}" width="100">
+                                            {% if 'uploads' in entity.imgPath %}
+                                                cropp needed
+                                            {% endif %}
                                         {% endif %}
                                     </td>
                                     <td>
@@ -128,7 +130,7 @@
                             </tfoot>
                         </table>
                     {#</div>#}
-                        {#{{ knp_pagination_render(entities) }}#}
+                        {{ knp_pagination_render(entities) }}
                     </div>
                 </div>
             </div>

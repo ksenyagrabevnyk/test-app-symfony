@@ -1,5 +1,5 @@
 {% extends '::base_admin.html.twig' %}
-{% block title %}Edit category{% endblock %}
+{% block title %}Редактировать продукт{% endblock %}
 
 {% form_theme edit_form ':Form:editFields.html.twig' %}
 {% form_theme delete_form ':Form:editFields.html.twig' %}
@@ -14,13 +14,13 @@
 {% block breadcrumbs %}
     <div class="row wrapper border-bottom white-bg page-heading ng-scope">
         <div class="col-lg-10">
-            <h2>{{ 'Categories'|trans }}</h2>
+            <h2>{{ 'Продукты'|trans }}</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="{{ path('admin_default_index') }}">{{ 'Home'|trans }}</a>
                 </li>
                 <li class="active">
-                    <strong>{{ 'Edit category'|trans }}</strong>
+                    <strong>{{ 'Редактировать продукт'|trans }}</strong>
                 </li>
             </ol>
         </div>
@@ -28,32 +28,75 @@
 {% endblock %}
 
 {% block body -%}
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-content">
-                        {{ form(edit_form, {attr: {class: "form-horizontal form-label-left input_mask"}}) }}
-                        {{ form(delete_form) }}
+    {#<!-- Шаблон для кропалки -->#}
+    <div class="previewImage">
+        <img src="{{ asset(entity.imgPath) }}" alt="" class="img-responsive center-block" style="height: 350px;width: 350px;">
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title  back-change">
+                    <h5>Загрузить изображение</h5>
+                    <button type="button" class="btn btn-w-m btn-danger pull-right btn-xs" id="deletePreview">Удалить</button>
+                    <label title="Upload image file" for="inputImage" class="btn btn-w-m btn-primary btn-xs pull-right" style="margin-right: 20px;">
+                        <input type="file" accept="image/*" name="file" id="inputImage" class="hide">
+                        Загрузить
+                    </label>
+                </div>
+                <div class="ibox-content photo-hide">
+                    <div class="row">
+                        <div class="col-md-6 cropper-block ">
+                            <input type="hidden" name="crop" class="cropped-input">
+                            <h4>
+                                Uploaded picture
+                            </h4>
+                            <img src="" alt="" class="lalala">
+                            <div class="image-crop">
+                                <img src="" alt="" id="image">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Cropped picture</h4>
+                            <div class="img-preview img-preview-sm"></div>
+                            <h4>Edit picture</h4>
+                            <p>You can change picture or download already cropped.</p>
+                            <div class="btn-group">
+                                <label title="Crop image" id="crop" class="btn btn-primary btn-w-m btn-copy-photoname">Crop</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    {#<!-- Шаблон для кропалки -->#}
+    <div class="ibox-content">
+        {{ form(edit_form, {attr: {class: "form-horizontal form-label-left input_mask"}}) }}
+        {{ form(delete_form) }}
+    </div>
 {% endblock %}
 
-    {% block last_javascript %}
-        {% for elem in edit_form %}
-            {% if checkbox_active is not defined and 'checkbox' in elem.vars['block_prefixes'] %}
-                {% set checkbox_active = 'true' %}
-                <link href='{{ asset('includes/admin/inspinia/css/plugins/switchery/switchery.css') }}' rel='stylesheet'>
-            {% endif %}
-            {% if file_active is not defined and 'file' in  elem.vars['block_prefixes'] %}
-                {% set file_active = 'true' %}
-                <link href='{{ asset('includes/admin/inspinia/css/upload_button.css') }}' rel='stylesheet'>
-            {% endif %}
-        {% endfor %}
-        <script type='text/javascript' src='{{ asset('includes/admin/inspinia/js/plugins/cropper/cropper.min.js') }}'></script>
-        {#script for crop photo#}
-        <script type="text/javascript" src="{{ asset('includes/admin/inspinia/js/plugins/cropper/crop_for_admin.js') }}"></script>
-    {% endblock %}
+  {% block last_javascript %}
+      {% for elem in edit_form %}
+          {% if checkbox_active is not defined and 'checkbox' in elem.vars['block_prefixes'] %}
+              {% set checkbox_active = 'true' %}
+              <link href='{{ asset('includes/admin/inspinia/css/plugins/switchery/switchery.css') }}' rel='stylesheet'>
+          {% endif %}
+          {% if file_active is not defined and 'file' in  elem.vars['block_prefixes'] %}
+              {% set file_active = 'true' %}
+              {#<script src='{{ asset('includes/admin/inspinia/js/image-delete.js') }}'></script>#}
+              {#<script>#}
+              {#$(document).ready(function(){#}
+              {#if ('{{ entity.getWebPath() }}' != '') {#}
+              {#$('.fileList').html('<img  width="100" src='+'{{ asset(entity.getWebPath())  }}'+' style='+'"padding-bottom: 20px"'+' /><a class="btn btn-danger del-im-aj" style="float:right;" data_id="{{ entity.getId }}" data_url="{{ entity.getEntityName }}">Удалить</a>');#}
+              {#}#}
+              {#});#}
+              {#</script>#}
+              <link href='{{ asset('includes/admin/inspinia/css/upload_button.css') }}' rel='stylesheet'>
+              {#<script type='text/javascript' src='{{ asset('includes/admin/inspinia/js/allPhotoPreview.js') }}'></script>#}
+          {% endif %}
+      {% endfor %}
+      <script type='text/javascript' src='{{ asset('includes/admin/inspinia/js/plugins/cropper/cropper.min.js') }}'></script>
+      {#script for crop photo#}
+      <script type="text/javascript" src="{{ asset('includes/admin/inspinia/js/plugins/cropper/crop_for_admin.js') }}"></script>
+  {% endblock %}

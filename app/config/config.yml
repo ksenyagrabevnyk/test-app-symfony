@@ -131,6 +131,30 @@ fos_rest:
         failed_validation: HTTP_BAD_REQUEST
         default_engine: twig
 
+liip_imagine:
+    resolvers :
+        default :
+            web_path :
+               cache_prefix:  media/cache/resolve/product_list/uploads
+    driver: imagick
+
+    filter_sets:
+        cache: ~
+        my_thumb:
+            filters:
+                thumbnail: { size: [120, 90], mode: outbound }
+        product_list:
+            filters:
+                thumbnail: { size: [350, 350], mode: outbound }
+        product_list_down:
+            filters:
+                downscale:
+                    max: [350, 350]
+        product_list_up:
+            filters:
+                upscale:
+                    min: [350, 350]
+
 knp_paginator:
     page_range: 5                      # default page range used in pagination control
     default_options:

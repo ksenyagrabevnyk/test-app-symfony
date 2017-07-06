@@ -45,7 +45,7 @@ class OrdersRepository extends EntityRepository
      * @param $yesterday
      * @return array
      */
-    public function getOrdersByDateQuery($userId, $yesterday = null, $today = null)
+    public function getOrdersByDateQuery($userId, $yesterday = null, $today = null, $thisWeek = null)
     {
         $orders = $this->createQueryBuilder('qb')
             ->select('
@@ -77,6 +77,17 @@ class OrdersRepository extends EntityRepository
                 $orders->andWhere("qb.purchaseDate = :today")
                     ->setParameter('today', $today);
             }
+
+            if ($thisWeek !== null) {
+                var_dump($today, $thisWeek); die;
+                $orders->andWhere("qb.purchaseDate BETWEEN :thisWeek AND :today")
+//                $orders->andWhere("qb.purchaseDate <= :today")
+//                       ->andWhere("qb.purchaseDate >= :thisWeek")
+                    ->setParameter('today', $today)
+                    ->setParameter('thisWeek', $thisWeek);
+            }
+
+
 //            ->andWhere('qb.purchaseDate <= :date')
 //            ->setParameter('date', $date);
 

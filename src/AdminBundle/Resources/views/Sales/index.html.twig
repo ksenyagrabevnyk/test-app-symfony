@@ -32,7 +32,7 @@
                     <div class="ibox-content">
                         <div class="">
 
-                            <form action="{{ path('filter') }}" method="get">
+                            <form id="filter" action="{{ path('filter') }}" method="get">
                                 <input type="submit" name="yesterday" value="Вчера" class="btn btn-sm btn-danger"/>
                                 <input type="submit" name="today" value="Сегодня" class="btn btn-sm btn-info"/>
                                 <input type="submit" name="this-is-week" value="Эта неделя" class="btn btn-sm btn-success"/>
@@ -55,6 +55,7 @@
                             <tbody>
 
                             {% for entity in entities %}
+                                {#{{ dump(entity) }}#}
                                     <tr class="gradeA">
                                         <td class=" ">
                                             {{ entity.items.0.orderId }}
@@ -117,4 +118,70 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+
+{% block last_javascript %}
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script>
+        /* attach a submit handler to the form */
+        $('input[name="today"]').submit(function() {
+
+            $.ajax({
+                type: 'get',
+                url: "{{ path('filter') }}",
+                data: $('form').serialize(),
+                success: function () {
+                alert('form was submitted');
+                }
+            });
+        });
+
+            /* stop form from submitting normally */
+
+            /* get some values from elements on the page: */
+            var $form = $(this),
+                term = $form.find('input[name="today"]').val(),
+//                url = $form.attr('action');
+                url = "{{ path('filter') }}";
+//            /* Send the data using post */
+//            var posting = $.post(url, {
+//                s: term
+//            });
+//
+//            /* Put the results in a div */
+//            posting.done(function(data) {
+//                var content = $(data).find('#content');
+//                $("#result").empty().append(content);
+//            });
+            alert('today');
+        });
+    </script>
+
+    <script>
+//        $(document).ready(function() {
+//            $('#filter').ajaxForm(function() {
+//                alert('form was submitted');
+//            });
+//        });
+
+        {#$(function () {#}
+
+            {#$('form').on('submit', function (e) {#}
+
+                {#e.preventDefault();#}
+
+                {#$.ajax({#}
+                    {#type: 'get',#}
+                    {#url: "{{ path('filter') }}",#}
+                    {#data: $('form').serialize(),#}
+                    {#success: function () {#}
+                        {#alert('form was submitted');#}
+                    {#}#}
+                {#});#}
+
+            {#});#}
+
+        {#});#}
+    </script>
 {% endblock %}

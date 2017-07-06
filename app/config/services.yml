@@ -10,3 +10,7 @@ services:
     file_uploader:
         class: AdminBundle\Services\FileUploaderService
         arguments: ['%upload_directory%']
+
+    app.photo.upload.service:
+        class: AdminBundle\Services\SavePhotosService
+        arguments: [%upload_directory%, @service_container, @doctrine.orm.entity_manager]

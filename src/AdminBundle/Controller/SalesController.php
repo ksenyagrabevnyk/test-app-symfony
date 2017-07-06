@@ -38,11 +38,7 @@ class SalesController extends Controller
 
         foreach ($orderInfo as $key => $item) {
 
-
             $groupItem[$item['purchaseDate']->format('Y-m-d')]['date'] = $item['purchaseDate']->format('Y-m-d');
-
-//            var_dump($groupItem[$item['purchaseDate']->format('Y-m-d')]['date']); die;
-
             $groupItem[$item['purchaseDate']->format('Y-m-d')]['items'][] = $item;
 
             if (count($groupItem[$item['purchaseDate']->format('Y-m-d')]['items']) === 1 ) {
@@ -56,12 +52,14 @@ class SalesController extends Controller
 
             if(!isset($groupItem[$item['purchaseDate']->format('Y-m-d')]['total_price'])) {
                 $groupItem[$item['purchaseDate']->format('Y-m-d')]['total_price'] = 0;
+                $groupItem[$item['purchaseDate']->format('Y-m-d')]['total_price_with_sale'] = 0;
             }
 
             if($item['salePrice'] != null) {
                 $groupItem[$item['purchaseDate']->format('Y-m-d')]['total_price'] += $item['purchasePrice'] * $item['count'];
                 $groupItem[$item['purchaseDate']->format('Y-m-d')]['total_price_with_sale'] += ($item['purchasePrice'] - $item['salePrice']) * $item['count'];
-
+//           echo '<pre>';
+//            var_dump($groupItem); die();
             } else {
                 $groupItem[$item['purchaseDate']->format('Y-m-d')]['total_price'] += $item['purchasePrice'] * $item['count'];
                 $groupItem[$item['purchaseDate']->format('Y-m-d')]['total_price_with_sale'] = $groupItem[$item['purchaseDate']->format('Y-m-d')]['total_price'];
@@ -103,43 +101,33 @@ class SalesController extends Controller
             $request->query->get('start_date', 'last month')
         );
 
-
-//        $ordersDates = [];
-//
-//        foreach ($ordersByDates as $ordersByDate) {
-//            $ordersDates[] =  $ordersByDate['purchaseDate']->format("Y-m-d");
-//
-//        }
-
-//        var_dump($ordersDates); die;
-
         if (isset($_GET['yesterday'])) {
+            $yesterday = $yesterday->format('Y-m-d');
 
             $ordersByDates = $em->getRepository(Orders::class)
-                ->getOrdersByDateQuery($userId, $yesterday, $today = null);
+                ->getOrdersByDateQuery($userId, $yesterday, $today = null, $thisWeek = null);
 
-//            var_dump(date('Y-m-d', $ordersByDates[0]['purchaseDate'])) ; die;
             echo '<pre>';
+            print_r($ordersByDates); die();
 
-//              1497549478 - 2017-06-15
-//                1497549582 - 2017-06-15
-//                1497568412 - 2017-06-16
-//                1497568412 - 2017-06-16
-//            var_dump($ordersByDates); die();
-
-//            print_r($ordersByDates); die;
         } elseif (isset($_GET['today'])) {
 
             $today = $currentDate->format('Y-m-d');
             $ordersByDates = $em->getRepository(Orders::class)
-                ->getOrdersByDateQuery($userId, $yesterday = null, $today);
+                ->getOrdersByDateQuery($userId, $yesterday = null, $today, $thisWeek = null);
 
            echo '<pre>';
             print_r($ordersByDates) ; die;
 
         } elseif (isset($_GET['this-is-week'])) {
+            $thisWeek = $thisWeek->format('Y-m-d');
+            $today = $currentDate->format('Y-m-d');
+            $ordersByDates = $em->getRepository(Orders::class)
+                ->getOrdersByDateQuery($userId, $yesterday = null, $today, $thisWeek);
 
-            var_dump('this-is-week') ; die;
+            echo '<pre>';
+            print_r($ordersByDates); die;
+//            var_dump($today, $thisWeek) ; die;
 
         } elseif (isset($_GET['this-is-month'])) {
 
