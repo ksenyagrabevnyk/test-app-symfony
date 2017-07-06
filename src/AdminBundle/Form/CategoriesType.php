@@ -17,7 +17,7 @@ class CategoriesType extends AbstractType
     {
         $builder
             ->add('name', null, [
-                'label' => 'Name',
+                'label' => 'Название категории',
             ])
         ;
     }

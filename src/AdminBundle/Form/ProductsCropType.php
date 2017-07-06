@@ -20,24 +20,24 @@ class ProductsCropType extends AbstractType
         $builder
             ->add('name', null, [
                 'required' => true,
-                'label' => 'Name',
+                'label' => 'Название товара',
             ])
             ->add('categoryId', null, [
                 'required' => true,
                 'class' => 'AdminBundle\Entity\Categories',
-                'label' => 'Category',
+                'label' => 'Выбрать категорию',
             ])
             ->add('salePrice', null, [
                 'required' => false,
-                'label' => 'Sale price',
+                'label' => 'Скидка',
             ])
             ->add('purchasePrice', null, [
                 'required' => false,
-                'label' => 'Purchase price',
+                'label' => 'Цена товара',
             ])
             ->add('profit', null, [
                 'required' => false,
-                'label' => 'Profit',
+                'label' => 'Маржа',
             ])
             ->add('imgPath', HiddenType::class, [
                 'attr' => [
