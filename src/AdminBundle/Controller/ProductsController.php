@@ -37,14 +37,14 @@ class ProductsController extends Controller
     {
 //        phpinfo(); die();
         $em = $this->get('doctrine.orm.entity_manager');
-        $user =  $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.context')->getToken()->getUser();
         $userId = $user->getId();
         $countAllActiveProducts = $em->getRepository(Products::class)
             ->getCountAllActiveProducts($userId);
         $search = $request->get('search');
         $entities = $em->getRepository(Products::class)
             ->getAllProductsQuery($search, $userId);
-        $paginator  = $this->get('knp_paginator');
+        $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $entities,
             $request->query->getInt('page', 1),
@@ -58,7 +58,7 @@ class ProductsController extends Controller
 
         return $this->render('AdminBundle:Products:index.html.twig', [
             'entities' => $pagination,
-            'count'  => $countAllActiveProducts,
+            'count' => $countAllActiveProducts,
         ]);
     }
 
@@ -95,7 +95,7 @@ class ProductsController extends Controller
 
         return $this->render('AdminBundle:Products:new.html.twig', [
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -108,18 +108,16 @@ class ProductsController extends Controller
     public function saveAction(Request $request)
     {
         $image = $request->request->get('image');
-
-        var_dump($image); die;
         $preg = '#^data:image/\w+;base64,#i';
         $imageDecoded = base64_decode(preg_replace($preg, '', $image));
 
         $info = getimagesize($image);
 
         $extension = image_type_to_extension($info[2]);
-        $imageName = md5(uniqid(rand(), true))."".$extension;
+        $imageName = md5(uniqid(rand(), true)) . "" . $extension;
 
-        $imageName = '/tmp/'.$imageName;
-        $path = $this->get('kernel')->getRootDir().'/../web'.$imageName;
+        $imageName = '/tmp/' . $imageName;
+        $path = $this->get('kernel')->getRootDir() . '/../web' . $imageName;
 
         file_put_contents($path, $imageDecoded);
 
@@ -159,11 +157,11 @@ class ProductsController extends Controller
     public function newAction()
     {
         $entity = new Products();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return $this->render('AdminBundle:Products:new.html.twig', [
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -176,6 +174,7 @@ class ProductsController extends Controller
      */
     public function editAction(Products $entity, $id)
     {
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find product entity.');
         }
@@ -183,8 +182,8 @@ class ProductsController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('AdminBundle:Products:edit.html.twig', [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ]);
     }
@@ -233,7 +232,6 @@ class ProductsController extends Controller
         $form->add('submit', 'submit', ['label' => 'Обновить']);
 
 
-
         return $form;
     }
 
@@ -245,11 +243,10 @@ class ProductsController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+
         $em = $this->get('doctrine.orm.entity_manager');
         $entity = $em->getRepository(Products::class)->find($id);
         $uploadService = $this->get('app.photo.upload.service');
-
-//        var_dump($uploadService); die;
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find products entity.');
@@ -260,7 +257,7 @@ class ProductsController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $em->flush();
+//            $em->flush();
             $categoryId = $request->request->get('adminbundle_products_crop')['categoryId'];
 //            var_dump($categoryId); die;
 
@@ -271,9 +268,11 @@ class ProductsController extends Controller
             $entity->setPurchasePrice($request->request->get('adminbundle_products_crop')['purchasePrice']);
             $entity->setProfit($request->request->get('adminbundle_products_crop')['profit']);
 //            $entity->setImgPath($request->request->get('adminbundle_products')['imgPath']);
+//            dump($entity); die;
 
-            $cropperFilteredImage = $uploadService->filterCroppedPhoto($entity);
-            $entity->setImgName($cropperFilteredImage);
+            $cropperFilteredImage = $uploadService->filterCroppedPhoto($entity, $request);
+
+            $entity->setImgPath($cropperFilteredImage);
 
             $em->flush();
 
@@ -281,8 +280,8 @@ class ProductsController extends Controller
         }
 
         return $this->render('AdminBundle:Products:edit.html.twig', [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ]);
     }
@@ -314,7 +313,7 @@ class ProductsController extends Controller
 //            $fs = new Filesystem();
 //            $fs->remove(['uploads/'.$entity->getImgPath()]);
 //            $em->remove($entity);
-            $em->flush();
+        $em->flush();
 //        }
 
         return $this->redirect($this->generateUrl('products'));
@@ -355,7 +354,6 @@ class ProductsController extends Controller
                 'attr' => [
                     'class' => 'btn btn-danger'
                 ]])
-            ->getForm()
-            ;
+            ->getForm();
     }
 }

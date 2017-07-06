@@ -27,7 +27,7 @@ class SavePhotosService
         return $this->container;
     }
 
-    public function filterCroppedPhoto($entity)
+    public function filterCroppedPhoto($entity, $request)
     {
         /** @var CacheManager */
         $cacheManager = $this
@@ -39,6 +39,7 @@ class SavePhotosService
         $entityName = $this->em->getClassMetadata(get_class($entity))->getTableName();
         $savePath = $this->uploadDir . '/' . $entityName . '/' . $id . '/' . $id . '.jpg';
 
+
         if (file_exists($path)) {
             if(!file_exists($this->uploadDir . '/' . $entityName . '/' . $id)) {
                 mkdir($this->uploadDir . '/' . $entityName . '/' . $id);
@@ -47,9 +48,11 @@ class SavePhotosService
             unlink($path);
         }
 
+
         $newPath = 'uploads/' . $entityName . '/' . $id . '/' . $id . '.jpg';
         $filter = $this->chooseFilterByEntity($entityName, $savePath);
         $newFilterPath = 'uploads/' . $filter . '/uploads/' . $entityName . '/' . $id . '/' . $id . '.jpg';
+
 
         $cacheManager->resolve($newPath, $filter);
         $cacheManager->generateUrl($newPath, $filter);
@@ -58,10 +61,18 @@ class SavePhotosService
                 $newPath,
                 $filter
             );
-        $this->container->get('liip_imagine.controller')->filterAction(new Request(), $newPath, $filter);
+
+//        dump(file_exists($path));
+//        die;
+
+
+//        $this->container->get('liip_imagine.controller')->filterAction($request, $newPath, $filter);
 
         if ($entityName != 'phrases') {
-            unlink($savePath);
+            if(file_exists($savePath)) {
+                unlink($savePath);
+            }
+
             rmdir($this->uploadDir . '/' . $entityName . '/' . $id);
         }
 
