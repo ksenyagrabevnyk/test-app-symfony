@@ -26,7 +26,7 @@
         "jms/serializer-bundle": "^1.5",
         "nelmio/api-doc-bundle": "^2.13",
         "nelmio/cors-bundle": "^1.5",
-        "liip/imagine-bundle": "^1.8",
+        "liip/imagine-bundle": "^1.8"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
