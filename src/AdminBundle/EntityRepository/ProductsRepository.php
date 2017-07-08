@@ -2,11 +2,12 @@
 
 namespace AdminBundle\EntityRepository;
 
+use AdminBundle\Entity\Users;
 use Doctrine\ORM\EntityRepository;
 
 class ProductsRepository extends EntityRepository
 {
-    public function getCountAllActiveProducts($userId)
+    public function getCountAllActiveProducts(Users $user)
     {
         $products = $this->createQueryBuilder('qb')
             ->select('COUNT(qb.id)')
@@ -14,7 +15,7 @@ class ProductsRepository extends EntityRepository
             ->leftJoin('c.userId', 'u')
             ->where('qb.isActive = true')
             ->andWhere('u.id = :id')
-            ->setParameter('id', $userId)
+            ->setParameter('id', $user)
             ;
 
         return $products
@@ -23,7 +24,7 @@ class ProductsRepository extends EntityRepository
             ;
     }
 
-    public function getAllProductsQuery($search = null, $userId)
+    public function getAllProductsQuery(Users $user, $search = null)
     {
         $products = $this->createQueryBuilder('qb')
             ->select('
@@ -37,7 +38,7 @@ class ProductsRepository extends EntityRepository
                 ->where('qb.name LIKE :search')
                 ->andWhere('qb.isActive = true')
                 ->andWhere('u.id = :id')
-                ->setParameter('id', $userId)
+                ->setParameter('id', $user)
                 ->setParameter('search', "%{search}%")
                 ->orderBy('qb.name')
                 ;
@@ -45,7 +46,7 @@ class ProductsRepository extends EntityRepository
             $products
                 ->andWhere('qb.isActive = true')
                 ->andWhere('u.id = :id')
-                ->setParameter('id', $userId)
+                ->setParameter('id', $user)
                 ->orderBy('qb.name')
                 ;
         }

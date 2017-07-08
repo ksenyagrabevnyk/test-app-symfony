@@ -34,20 +34,23 @@ class SavePhotosService
             ->container
             ->get('liip_imagine.cache.manager');
 
+        if(!$entity->getImgPath()) {
+            throw new \Exception('No img path :(');
+        }
+
         $path = $this->uploadDir . '/..' . $entity->getImgPath();
         $id = $entity->getId();
         $entityName = $this->em->getClassMetadata(get_class($entity))->getTableName();
         $savePath = $this->uploadDir . '/' . $entityName . '/' . $id . '/' . $id . '.jpg';
 
-
         if (file_exists($path)) {
-            if(!file_exists($this->uploadDir . '/' . $entityName . '/' . $id)) {
+            if (!file_exists($this->uploadDir . '/' . $entityName . '/' . $id)) {
                 mkdir($this->uploadDir . '/' . $entityName . '/' . $id);
             }
-            move_uploaded_file($path ,$savePath);
+
+            move_uploaded_file($path, $savePath);
             unlink($path);
         }
-
 
         $newPath = 'uploads/' . $entityName . '/' . $id . '/' . $id . '.jpg';
         $filter = $this->chooseFilterByEntity($entityName, $savePath);
@@ -62,18 +65,18 @@ class SavePhotosService
                 $filter
             );
 
-//        dump(file_exists($path));
-//        die;
-
-
-//        $this->container->get('liip_imagine.controller')->filterAction($request, $newPath, $filter);
+        $this->container->get('liip_imagine.controller')->filterAction($request, $newPath, $filter);
 
         if ($entityName != 'phrases') {
-            if(file_exists($savePath)) {
+            if (file_exists($savePath)) {
                 unlink($savePath);
             }
 
-            rmdir($this->uploadDir . '/' . $entityName . '/' . $id);
+            $dir = $this->uploadDir . '/' . $entityName . '/' . $id;
+
+            if (is_dir($dir)) {
+                rmdir($dir);
+            }
         }
 
         return $newFilterPath;
@@ -84,7 +87,7 @@ class SavePhotosService
         /** @var $filter String */
         switch ($entityName) {
             case 'products':
-                    $filter = 'product_list_down';
+                $filter = 'product_list_down';
                 break;
         }
 

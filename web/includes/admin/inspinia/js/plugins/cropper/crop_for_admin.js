@@ -17,28 +17,22 @@ $($image).cropper({
 
 var $inputImage = $("#inputImage");
 $("#crop").click(function() {
-    // window.open($image.cropper("getDataURL"));
-    // var dataURL = $image.cropper("getDataURL");
-    // dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-
     var data = {'image': $image.cropper("getDataURL")};
-    // var inputImage = $('.photo-file').val('sdsdsd');
-    //
-    // console.log(data);
+
     $.ajax({
         type:"POST",
         url: "/admin/products/save_img",
         data: data,
         success: function(result){
-            console.log(result);
-            $('#adminbundle_products_crop_img_path').val(result.image_path);
-            swal({
-                title: "",
-                text: "",
-                timer: 1000,
-                type: "success",
-                showConfirmButton: false
-            })
+            $('#adminbundle_products_crop_imgPath').val(result.image_path);
+            alert('Успех');
+            // swal({
+            //     title: "",
+            //     text: "",
+            //     timer: 1000,
+            //     type: "success",
+            //     showConfirmButton: false
+            // })
         }
     });
 });

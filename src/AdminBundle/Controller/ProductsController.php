@@ -4,6 +4,7 @@ namespace AdminBundle\Controller;
 
 use AdminBundle\Entity\Products;
 use AdminBundle\Entity\Categories;
+use AdminBundle\EntityRepository\ProductsRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,19 +33,26 @@ class ProductsController extends Controller
      *
      * @Route("/", name="products")
      * @Method("GET")
+     *
+     * @param $request Request
+     * @return Response
      */
     public function indexAction(Request $request)
     {
-        phpinfo(); die();
         $em = $this->get('doctrine.orm.entity_manager');
-        $user = $this->get('security.context')->getToken()->getUser();
-        $userId = $user->getId();
-        $countAllActiveProducts = $em->getRepository(Products::class)
-            ->getCountAllActiveProducts($userId);
+        $user = $this->getUser();
+        /**
+         * @var $productRepository ProductsRepository
+         */
+        $productRepository = $em->getRepository(Products::class);
+
+        $countAllActiveProducts = $productRepository->getCountAllActiveProducts($user);
+
         $search = $request->get('search');
-        $entities = $em->getRepository(Products::class)
-            ->getAllProductsQuery($search, $userId);
+        $entities = $productRepository->getAllProductsQuery($user, $search);
+
         $paginator = $this->get('knp_paginator');
+
         $pagination = $paginator->paginate(
             $entities,
             $request->query->getInt('page', 1),
@@ -243,7 +251,6 @@ class ProductsController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-
         $em = $this->get('doctrine.orm.entity_manager');
         $entity = $em->getRepository(Products::class)->find($id);
         $uploadService = $this->get('app.photo.upload.service');
@@ -257,18 +264,15 @@ class ProductsController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-//            $em->flush();
-            $categoryId = $request->request->get('adminbundle_products_crop')['categoryId'];
-//            var_dump($categoryId); die;
+//            $categoryId = $request->request->get('adminbundle_products_crop')['categoryId'];
 
-            $category = $em->getRepository(Categories::class)->find($categoryId);
-            $entity->setName($request->request->get('adminbundle_products_crop')['name']);
-            $entity->setCategoryId($category);
-            $entity->setSalePrice($request->request->get('adminbundle_products_crop')['salePrice']);
-            $entity->setPurchasePrice($request->request->get('adminbundle_products_crop')['purchasePrice']);
-            $entity->setProfit($request->request->get('adminbundle_products_crop')['profit']);
+//            $category = $em->getRepository(Categories::class)->find($categoryId);
+//            $entity->setName($request->request->get('adminbundle_products_crop')['name']);
+//            $entity->setCategoryId($category);
+//            $entity->setSalePrice($request->request->get('adminbundle_products_crop')['salePrice']);
+//            $entity->setPurchasePrice($request->request->get('adminbundle_products_crop')['purchasePrice']);
+//            $entity->setProfit($request->request->get('adminbundle_products_crop')['profit']);
 //            $entity->setImgPath($request->request->get('adminbundle_products')['imgPath']);
-//            dump($entity); die;
 
             $cropperFilteredImage = $uploadService->filterCroppedPhoto($entity, $request);
 

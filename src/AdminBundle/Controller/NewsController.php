@@ -26,7 +26,7 @@ class NewsController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->get("doctrine.orm.entity_manager");
 
         $entities = $em->getRepository('AdminBundle:News')->findAll();
 
@@ -149,7 +149,7 @@ class NewsController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->get("doctrine.orm.entity_manager");
 
         $entity = $em->getRepository('AdminBundle:News')->find($id);
 
