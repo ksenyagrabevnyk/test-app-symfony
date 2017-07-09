@@ -92,7 +92,7 @@ class ProductsController extends Controller
             $entity->setSalePrice($request->request->get('adminbundle_products_crop')['salePrice']);
             $entity->setPurchasePrice($request->request->get('adminbundle_products_crop')['purchasePrice']);
             $entity->setProfit($request->request->get('adminbundle_products_crop')['profit']);
-            $cropperFilteredImage = $uploadService->filterCroppedPhoto($entity);
+            $cropperFilteredImage = $uploadService->filterCroppedPhoto($entity, $request);
             $entity->setImgPath($cropperFilteredImage);
 
 //            $em->persist($entity);
